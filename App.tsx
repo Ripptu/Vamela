@@ -73,9 +73,11 @@ function App() {
       {/* Contact Modal */}
       <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
 
-      {/* Optimized Noise Texture - Removed mix-blend-overlay for better scroll performance */}
+      {/* Optimized Noise Texture */}
       <div className="fixed inset-0 pointer-events-none z-[50] opacity-[0.04] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
       
+      {/* No Navbar here anymore */}
+
       <main className="relative z-10">
         {view === 'home' && (
           <>

@@ -4,7 +4,7 @@ import { cn } from "../../lib/utils";
 interface LiquidButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   className?: string;
-  variant?: 'primary' | 'secondary' | 'whatsapp';
+  variant?: 'primary' | 'secondary' | 'whatsapp' | 'glass';
   href?: string;
   target?: string;
   rel?: string;
@@ -24,15 +24,23 @@ export const LiquidButton: React.FC<LiquidButtonProps> = ({
 
   // Aesthetic Variants
   const variants = {
-    // Standard High-Contrast (White)
-    primary: "bg-white text-black border border-white shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_50px_rgba(255,255,255,0.7)]",
+    // Standard High-Contrast (White) - Now with better shadow and text contrast
+    primary: "bg-white text-black border border-white shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.6)]",
     
     // Brand Accent (Orange Gradient)
     secondary: "bg-gradient-to-r from-orange-500 to-red-600 text-white border border-orange-500/50 shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:shadow-[0_0_50px_rgba(249,115,22,0.8)]",
     
     // WhatsApp Specific (Green Gradient)
     whatsapp: "bg-[#25D366] text-black hover:text-white border border-[#25D366] shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_50px_rgba(37,211,102,0.8)]",
+
+    // Glass / Dark
+    glass: "bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20"
   };
+
+  // Adjust shimmer color for visibility on light vs dark backgrounds
+  const shimmerColor = variant === 'primary' 
+    ? "from-transparent via-gray-400/30 to-transparent" // Darker shimmer for white button
+    : "from-transparent via-white/40 to-transparent";    // White shimmer for colored buttons
 
   return (
     // @ts-ignore
@@ -41,8 +49,8 @@ export const LiquidButton: React.FC<LiquidButtonProps> = ({
       className={cn(baseStyles, variants[variant], className)}
       {...props}
     >
-      {/* Continuous Shimmer Animation */}
-      <div className="absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 animate-button-shine pointer-events-none" />
+      {/* Continuous Shimmer Animation - Optimized for visibility */}
+      <div className={`absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r ${shimmerColor} -skew-x-12 animate-button-shine pointer-events-none`} />
       
       {/* Hover Flash Overlay */}
       <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
