@@ -1,0 +1,120 @@
+import React, { useState, useEffect } from 'react';
+import { Hero } from './components/Hero';
+import { Features } from './components/Features';
+import { Showcase } from './components/Showcase';
+import { Testimonials } from './components/Testimonials';
+import { Contact } from './components/Contact';
+import { Footer } from './components/Footer';
+import { About } from './components/About';
+import { Impressum, Datenschutz } from './components/Legal';
+import { BeforeAfter } from './components/BeforeAfter';
+import { PriceCalculator } from './components/PriceCalculator';
+import { LogoReveal } from './components/LogoReveal';
+import { ContactModal } from './components/ContactModal';
+import Lenis from 'lenis';
+
+function App() {
+  const [view, setView] = useState<string>('home');
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
+  // Dynamic Title Logic
+  useEffect(() => {
+    const originalTitle = document.title;
+    const handleVisibilityChange = () => {
+        if (document.hidden) {
+            document.title = "Lass uns starten 🚀 | VAMELA";
+        } else {
+            document.title = originalTitle;
+        }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
+  // Smooth Scroll - Optimized settings
+  useEffect(() => {
+     const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        touchMultiplier: 2,
+     });
+     
+     const raf = (time: number) => {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+     };
+     requestAnimationFrame(raf);
+     return () => lenis.destroy();
+  }, []);
+
+  // Handle navigation
+  const handleNavigate = (target: string) => {
+    if (target === 'home') {
+      setView('home');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (['impressum', 'datenschutz', 'agb'].includes(target)) {
+      setView(target);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      setView('home');
+      setTimeout(() => {
+        const element = document.getElementById(target);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#050505] text-white">
+      
+      {/* Contact Modal */}
+      <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
+
+      {/* Optimized Noise Texture - Removed mix-blend-overlay for better scroll performance */}
+      <div className="fixed inset-0 pointer-events-none z-[50] opacity-[0.04] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+      
+      <main className="relative z-10">
+        {view === 'home' && (
+          <>
+            <Hero onOpenContact={() => setIsContactModalOpen(true)} />
+            
+            {/* IMMEDIATE PROOF: Vorher/Nachher direkt nach Hero für maximalen Impact */}
+            <BeforeAfter />
+            
+            {/* VALUE PROPOSITION: Was bietest du an? */}
+            <Features />
+            
+            {/* INTERACTIVE REVEAL: Brand Polish */}
+            <LogoReveal />
+            
+            {/* DEEP DIVE: Wie arbeitest du? */}
+            <Showcase />
+
+            {/* INTERACTIVE TOOL: Calculator (Conversion Booster) */}
+            <PriceCalculator />
+            
+            {/* SOCIAL PROOF: Wem hast du geholfen? */}
+            <Testimonials />
+            
+            {/* CONNECTION: Wer bist du? (Erst Vertrauen in Arbeit, dann in Person) */}
+            <About />
+            
+            {/* ACTION */}
+            <Contact onOpenContact={() => setIsContactModalOpen(true)} />
+          </>
+        )}
+        {view === 'impressum' && <Impressum onBack={() => handleNavigate('home')} />}
+        {view === 'datenschutz' && <Datenschutz onBack={() => handleNavigate('home')} />}
+        {view === 'agb' && <Datenschutz onBack={() => handleNavigate('home')} />} 
+      </main>
+
+      {view === 'home' && <Footer onNavigate={handleNavigate} />}
+      
+    </div>
+  );
+}
+
+export default App;
