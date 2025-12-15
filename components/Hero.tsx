@@ -1,169 +1,173 @@
-import React from 'react';
+import React, { useRef } from "react";
+import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 import { Mail, MessageCircle } from 'lucide-react';
-import { motion, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { LiquidButton } from './ui/LiquidButton';
+import { cn } from "../lib/utils";
 
-const ToolItem: React.FC<{ name: string }> = ({ name }) => (
-  <div className="flex items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors">
-    <div className="w-1.5 h-1.5 rounded-full bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.5)]"></div>
-    <span className="text-sm md:text-base font-medium text-gray-300">{name}</span>
-  </div>
-);
-
-// --- Main Hero Component ---
+// Images for the Marquee
+const HERO_IMAGES = [
+  "https://mir-s3-cdn-cf.behance.net/project_modules/hd/f8e7b5105213155.5f742224dbf68.jpg",
+  "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/309826105213155.5f742224de498.jpg",
+  "https://i.ytimg.com/vi/RPgOaElGsGc/maxresdefault.jpg",
+  "https://cdn.dribbble.com/userupload/41573963/file/original-ac839f228c8ebe7139e7a9cfcae7d3fa.png?resize=400x0",
+  "https://marketplace.canva.com/EAFLXoWGglA/2/0/1600w/canva-beige-and-black-trendy-minimalist-new-abstract-store-logo-u5oX0PaKeUM.jpg",
+  "https://cdn.dribbble.com/userupload/43854809/file/original-2983c03c67efe234428ea8a83df572a2.png?resize=400x0",
+  "https://i0.wp.com/graphicdesignjunction.com/wp-content/uploads/2024/08/mountain_%26_dog_logo.jpg?resize=890%2C668&ssl=1",
+  "https://www.logoai.com/uploads/output/2025/06/20/1aaf5e339a9a9bb5c0a92b728316e901.jpg",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBhMSVfRmiE-2ghs82gymc4luLqKdEWYk6jQ&s",
+  "https://cdn.dribbble.com/userupload/45066279/file/d44190eb7835505a9882ef81e92530c0.png?resize=400x0",
+  "https://www.inkyy.com/wp-content/uploads/2018/12/suitcase.png"
+];
 
 interface HeroProps {
   onOpenContact: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // Use MotionTemplate to update background without React renders
-  const background = useMotionTemplate`radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.03), transparent 40%)`;
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const { left, top } = e.currentTarget.getBoundingClientRect();
-    mouseX.set(e.clientX - left);
-    mouseY.set(e.clientY - top);
+  const FADE_IN_VARIANTS = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 20 } },
   };
 
-  const services = [
-    "High-End Webdesign",
-    "Branding & Logo",
-    "SEO Strategie",
-    "Online Shops",
-    "Performance Tuning",
-    "Corporate Identity",
-    "React Development",
-    "UI/UX Design",
-    "Conversion Optimierung"
-  ];
+  // Mouse Glow Logic
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  // Smooth out the mouse movement
+  const springConfig = { damping: 25, stiffness: 150 };
+  const mouseXSpring = useSpring(mouseX, springConfig);
+  const mouseYSpring = useSpring(mouseY, springConfig);
 
-  const easing = [0.22, 1, 0.36, 1]; // Custom cubic-bezier for high-end smooth feel
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { clientX, clientY, currentTarget } = e;
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  };
+
+  // Create a radial gradient mask that follows the mouse
+  const background = useMotionTemplate`radial-gradient(400px circle at ${mouseXSpring}px ${mouseYSpring}px, rgba(255, 255, 255, 0.08), transparent 80%)`;
+
+  // Duplicate images for seamless loop
+  const duplicatedImages = [...HERO_IMAGES, ...HERO_IMAGES];
 
   return (
     <section 
-      onMouseMove={handleMouseMove}
-      className="relative pt-20 pb-16 md:pt-32 md:pb-20 px-6 flex flex-col items-center text-center overflow-hidden group min-h-[90vh] justify-center"
+        className="relative w-full h-screen overflow-hidden bg-[#050505] flex flex-col items-center justify-center text-center px-4 group"
+        onMouseMove={handleMouseMove}
     >
-      {/* Interactive Spotlight Effect - Optimized with MotionValue */}
-      <motion.div 
-        className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"
-        style={{ background }}
-      />
+       
+       {/* Background Effects */}
+       {/* Mouse Follow Glow */}
+       <motion.div
+            className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+            style={{ background }}
+       />
+       
+       <div className="z-20 flex flex-col items-center max-w-5xl mb-24 md:mb-12">
+          
+          {/* Logo Section (Larger & Static) */}
+          <motion.div
+             initial="hidden"
+             animate="show"
+             variants={FADE_IN_VARIANTS}
+             className="mb-8"
+          >
+             <img 
+                src="https://i.postimg.cc/MKfgVYQk/html.png" 
+                alt="VAMELA Logo" 
+                className="w-56 h-auto md:w-80 object-contain drop-shadow-[0_0_40px_rgba(255,255,255,0.1)]"
+            />
+          </motion.div>
 
-      {/* Background Grid Effect */}
-      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+          {/* Title */}
+           <motion.h1
+            initial="hidden"
+            animate="show"
+            variants={{
+                hidden: {},
+                show: {
+                    transition: {
+                        staggerChildren: 0.1,
+                    },
+                },
+            }}
+            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[0.95]"
+            >
+             <motion.span variants={FADE_IN_VARIANTS} className="block text-gray-100">Webdesign</motion.span>
+             <motion.span variants={FADE_IN_VARIANTS} className="block text-transparent bg-clip-text bg-gradient-to-br from-orange-400 via-orange-200 to-white pb-2">& Grafikdesign.</motion.span>
+           </motion.h1>
 
-      {/* Content Wrapper for Staggered Animation */}
-      <div className="relative z-10 flex flex-col items-center w-full">
-        
-        {/* LOGO */}
-        <motion.img 
-          src="https://i.postimg.cc/MKfgVYQk/html.png" 
-          alt="VAMELA Logo" 
-          width="800"
-          height="200"
-          className="w-full max-w-[280px] sm:max-w-sm md:max-w-3xl h-auto mb-6 mx-auto block object-contain"
-          initial={{ opacity: 0, y: 30, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1.0, ease: easing }}
-          fetchPriority="high"
-        />
+          {/* Description */}
+          <motion.p
+            initial="hidden"
+            animate="show"
+            variants={FADE_IN_VARIANTS}
+            transition={{ delay: 0.5 }}
+            className="mt-6 max-w-2xl text-lg text-gray-400 leading-relaxed"
+          >
+            Ich verwandle komplexe Ideen in digitale Erlebnisse. Visuelle Exzellenz für Marken, die nicht nur gesehen, sondern verstanden werden wollen.
+          </motion.p>
 
-        {/* CLARITY BADGE: Explicitly state what this is */}
-        <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.8, ease: easing }}
-            className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] md:text-xs font-bold tracking-widest uppercase text-gray-300 mb-8 backdrop-blur-md"
+          {/* Buttons */}
+          <motion.div
+            initial="hidden"
+            animate="show"
+            variants={FADE_IN_VARIANTS}
+            transition={{ delay: 0.7 }}
+            className="mt-10 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+          >
+            <LiquidButton 
+                onClick={onOpenContact}
+                variant="secondary"
+                className="w-full sm:w-auto cursor-pointer"
+            >
+                <Mail className="w-5 h-5" /> PROJEKT ANFRAGEN
+            </LiquidButton>
+
+            <LiquidButton 
+                href="https://wa.me/4917624200179" 
+                variant="whatsapp"
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto"
+            >
+                <MessageCircle className="w-5 h-5 fill-current" /> WHATSAPP
+            </LiquidButton>
+          </motion.div>
+       </div>
+
+       {/* Marquee at Bottom */}
+       <div className="absolute bottom-0 left-0 w-full h-40 md:h-56 z-10 [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_100%)] pointer-events-none">
+        <motion.div
+          className="flex gap-6 pl-4"
+          animate={{
+            x: ["0%", "-50%"],
+          }}
+          transition={{
+              ease: "linear",
+              duration: 60,
+              repeat: Infinity,
+          }}
+          style={{ width: "max-content" }}
         >
-            <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></div>
-            Webdesign & Branding Studio • Germany
+             {duplicatedImages.map((src, index) => (
+            <div
+              key={index}
+              className="relative aspect-[4/3] h-32 md:h-44 flex-shrink-0 grayscale-[50%] opacity-60"
+              style={{
+                rotate: `${index % 2 === 0 ? -2 : 2}deg`,
+              }}
+            >
+              <img
+                src={src}
+                alt={`Showcase image ${index + 1}`}
+                className="w-full h-full object-cover rounded-xl border border-white/10 shadow-lg"
+              />
+            </div>
+          ))}
         </motion.div>
-
-        {/* Heading - MORE DIRECT */}
-        <motion.h1 
-          className="max-w-5xl text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.1] md:leading-tight"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.0, delay: 0.35, ease: easing }}
-        >
-          High-End Webdesign. <br />
-          <span 
-            className="text-transparent bg-clip-text bg-gradient-to-r from-neutral-500 via-white to-neutral-500 animate-shimmer bg-[length:200%_100%]"
-            style={{ '--shimmer-width': '200%' } as any}
-          >
-            Marken, die verkaufen.
-          </span>
-        </motion.h1>
-
-        {/* Subtext - EXPLAIN FOR WHOM */}
-        <motion.p 
-          className="max-w-2xl text-base md:text-lg text-gray-400 mb-10 leading-relaxed px-4 md:px-0"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.0, delay: 0.5, ease: easing }}
-        >
-          Ich entwickle maßgeschneiderte Websites und visuelle Identitäten für ambitionierte Selbstständige & KMUs. 
-          Keine Baukästen. Keine Kompromisse. Dein digitaler Auftritt, der Besucher zu Kunden macht.
-        </motion.p>
-
-        {/* Actions - Using new LiquidButton */}
-        <motion.div 
-          className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto px-6 sm:px-0"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.0, delay: 0.65, ease: easing }}
-        >
-          {/* Main Action triggers modal now */}
-          <LiquidButton 
-            onClick={onOpenContact}
-            variant="secondary"
-            className="w-full sm:w-auto cursor-pointer"
-          >
-            <Mail className="w-5 h-5" /> PROJEKT ANFRAGEN
-          </LiquidButton>
-
-          <LiquidButton 
-            href="https://wa.me/4917624200179" 
-            variant="whatsapp"
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto"
-          >
-            <MessageCircle className="w-5 h-5 fill-current" /> WHATSAPP
-          </LiquidButton>
-        </motion.div>
-
-      </div>
-
-      {/* Services - Infinite Marquee (Replaced Tech Stack with Value Props) */}
-      <motion.div 
-        className="relative z-10 mt-20 pt-10 border-t border-white/5 w-full max-w-6xl overflow-hidden"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, delay: 0.8, ease: "easeOut" }}
-      >
-        <p className="text-center text-xs text-gray-500 uppercase tracking-widest mb-6 md:mb-8">
-          LEISTUNGEN & EXPERTISE
-        </p>
-        
-        <div className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]">
-          <div className="flex shrink-0 animate-marquee whitespace-nowrap gap-8 md:gap-12 items-center pr-8 md:pr-12">
-            {services.map((service, index) => (
-               <ToolItem key={`list1-${index}`} name={service} />
-            ))}
-          </div>
-          <div className="flex shrink-0 animate-marquee whitespace-nowrap gap-8 md:gap-12 items-center pr-8 md:pr-12">
-            {services.map((service, index) => (
-               <ToolItem key={`list2-${index}`} name={service} />
-            ))}
-          </div>
-        </div>
-      </motion.div>
+       </div>
     </section>
   );
 };

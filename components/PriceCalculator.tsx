@@ -3,13 +3,13 @@ import { motion } from 'framer-motion';
 import { Calculator, Check, Zap } from 'lucide-react';
 
 export const PriceCalculator: React.FC = () => {
-  const [pages, setPages] = useState(5);
-  const [designLevel, setDesignLevel] = useState<'standard' | 'premium' | 'high-end'>('premium');
+  const [pages, setPages] = useState(1);
+  const [designLevel, setDesignLevel] = useState<'standard' | 'premium' | 'high-end'>('standard');
   const [features, setFeatures] = useState({
-    seo: true,
-    cms: true,
+    seo: false,
+    cms: false,
     copywriting: false,
-    legal: true
+    legal: false
   });
   const [total, setTotal] = useState(0);
 

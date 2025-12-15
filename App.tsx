@@ -7,9 +7,7 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { About } from './components/About';
 import { Impressum, Datenschutz } from './components/Legal';
-import { BeforeAfter } from './components/BeforeAfter';
 import { PriceCalculator } from './components/PriceCalculator';
-import { LogoReveal } from './components/LogoReveal';
 import { ContactModal } from './components/ContactModal';
 import Lenis from 'lenis';
 
@@ -83,14 +81,8 @@ function App() {
           <>
             <Hero onOpenContact={() => setIsContactModalOpen(true)} />
             
-            {/* IMMEDIATE PROOF: Vorher/Nachher direkt nach Hero für maximalen Impact */}
-            <BeforeAfter />
-            
             {/* VALUE PROPOSITION: Was bietest du an? */}
             <Features />
-            
-            {/* INTERACTIVE REVEAL: Brand Polish */}
-            <LogoReveal />
             
             {/* DEEP DIVE: Wie arbeitest du? */}
             <Showcase />
