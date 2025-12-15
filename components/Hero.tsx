@@ -69,7 +69,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
 
        {/* Mouse Revealed Grid Effect */}
        <motion.div
-            className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-500 opacity-0 group-hover:opacity-100"
+            className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-500 opacity-0 group-hover:opacity-100 will-change-[mask-image]"
             style={{ 
                 maskImage,
                 WebkitMaskImage: maskImage,

@@ -158,7 +158,7 @@ const GraphicReferencesVisual = () => {
                  <motion.div 
                     animate={{ y: [0, -10, 0], rotateZ: [-15, -12, -15] }}
                     transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-12 left-12 w-24 h-36 bg-white rounded shadow-xl flex flex-col p-2 z-10 origin-bottom-left"
+                    className="absolute top-12 left-12 w-24 h-36 bg-white rounded shadow-xl flex flex-col p-2 z-10 origin-bottom-left will-change-transform"
                     style={{ rotate: -15 }}
                  >
                      <div className="w-full h-1/2 bg-gray-200 rounded-sm mb-2 overflow-hidden">
@@ -175,7 +175,7 @@ const GraphicReferencesVisual = () => {
                  <motion.div 
                     animate={{ y: [0, -15, 0], scale: [1, 1.05, 1] }}
                     transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute top-20 right-16 w-28 h-28 bg-[#000] rounded-xl border border-gray-800 shadow-2xl flex items-center justify-center z-20"
+                    className="absolute top-20 right-16 w-28 h-28 bg-[#000] rounded-xl border border-gray-800 shadow-2xl flex items-center justify-center z-20 will-change-transform"
                     style={{ rotate: 10 }}
                  >
                      <div className="w-16 h-16 border-2 border-white/20 rounded-full flex items-center justify-center">
@@ -187,7 +187,7 @@ const GraphicReferencesVisual = () => {
                  <motion.div 
                     animate={{ y: [0, -8, 0] }}
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                    className="absolute bottom-24 left-24 z-30"
+                    className="absolute bottom-24 left-24 z-30 will-change-transform"
                  >
                       {/* Card Bottom */}
                       <div className="absolute top-2 left-2 w-32 h-20 bg-gray-100 rounded shadow-md transform rotate-6 border border-gray-200"></div>
@@ -208,7 +208,7 @@ const GraphicReferencesVisual = () => {
                  <motion.div 
                     animate={{ y: [0, -12, 0], rotateZ: [5, 8, 5] }}
                     transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                    className="absolute bottom-10 right-24 w-20 h-40 bg-[#F5F5F0] rounded shadow-lg p-2 z-10 flex flex-col items-center border border-gray-200"
+                    className="absolute bottom-10 right-24 w-20 h-40 bg-[#F5F5F0] rounded shadow-lg p-2 z-10 flex flex-col items-center border border-gray-200 will-change-transform"
                     style={{ rotate: 5 }}
                  >
                      <div className="text-[6px] tracking-[2px] uppercase mb-3 mt-1 text-gray-500 font-serif">Menu</div>
