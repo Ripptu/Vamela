@@ -73,16 +73,16 @@ export const PriceCalculator: React.FC = () => {
         <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-12">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-purple-400 font-medium mb-4">
-                    <Calculator className="w-3 h-3" /> KOSTENSCHÄTZUNG
+                    <Calculator className="w-3 h-3" /> WEBSITE KOSTEN RECHNER
                 </div>
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
                     Was kostet eine <br/>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-white">
-                        richtig gute Website?
+                        günstige Website?
                     </span>
                 </h2>
                 <p className="text-gray-400 max-w-2xl mx-auto">
-                    Transparenz von Anfang an. Spiele mit den Reglern, um ein Gefühl für das Investment zu bekommen. (Unverbindliche Schätzung)
+                    Transparenz von Anfang an. Du möchtest eine Website billig erstellen lassen, aber nicht an Qualität sparen? Kalkuliere hier deinen fairen Festpreis.
                 </p>
             </div>
 
@@ -106,7 +106,7 @@ export const PriceCalculator: React.FC = () => {
                             className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-orange-500"
                         />
                         <div className="flex justify-between text-xs text-gray-500 mt-2 font-mono">
-                            <span>Onepager</span>
+                            <span>Günstiger Onepager</span>
                             <span>Corporate Site</span>
                         </div>
                     </div>
@@ -116,7 +116,7 @@ export const PriceCalculator: React.FC = () => {
                         <label className="text-white font-bold block mb-6">Design Anspruch</label>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {[
-                                { id: 'standard', label: 'Clean & Basic', desc: 'Funktional, basierend auf Best Practices.' },
+                                { id: 'standard', label: 'Clean & Preiswert', desc: 'Funktional, basierend auf Best Practices. Perfekt für den Start.' },
                                 { id: 'premium', label: 'Custom Brand', desc: 'Individuelle Icons, Animationen, starke Identität.' },
                                 { id: 'high-end', label: 'High-End', desc: 'Awwwards-Level, 3D, WebGL, kompromisslos.' }
                             ].map((level) => (
@@ -207,10 +207,10 @@ export const PriceCalculator: React.FC = () => {
                             rel="noopener noreferrer"
                             className="w-full flex items-center justify-center gap-2 bg-white hover:bg-gray-200 text-black font-bold py-4 rounded-xl transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(255,255,255,0.2)]"
                         >
-                            <Zap className="w-4 h-4 fill-black" /> Projekt anfragen
+                            <Zap className="w-4 h-4 fill-black" /> Angebot anfordern
                         </a>
                         <p className="text-[10px] text-gray-600 text-center mt-4">
-                            *Dies ist eine grobe Schätzung. Der finale Preis hängt von den genauen Anforderungen ab. Keine versteckten Kosten.
+                            *Dies ist eine unverbindliche Schätzung. Der finale Preis hängt von den genauen Anforderungen ab. Günstig und fair.
                         </p>
                     </div>
                 </div>

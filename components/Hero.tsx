@@ -16,7 +16,8 @@ const HERO_IMAGES = [
   "https://www.logoai.com/uploads/output/2025/06/20/1aaf5e339a9a9bb5c0a92b728316e901.jpg",
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBhMSVfRmiE-2ghs82gymc4luLqKdEWYk6jQ&s",
   "https://cdn.dribbble.com/userupload/45066279/file/d44190eb7835505a9882ef81e92530c0.png?resize=400x0",
-  "https://www.inkyy.com/wp-content/uploads/2018/12/suitcase.png"
+  "https://www.inkyy.com/wp-content/uploads/2018/12/suitcase.png",
+  "https://i.postimg.cc/mDKysVKh/ssss.png"
 ];
 
 interface HeroProps {
@@ -92,7 +93,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
           >
              <img 
                 src="https://i.postimg.cc/MKfgVYQk/html.png" 
-                alt="VAMELA Logo" 
+                alt="VAMELA Webdesign & Branding Agentur Logo" 
                 className="w-56 h-auto md:w-80 object-contain drop-shadow-[0_0_40px_rgba(255,255,255,0.1)]"
             />
           </motion.div>
@@ -111,8 +112,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
             }}
             className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[0.95]"
             >
-             <motion.span variants={FADE_IN_VARIANTS} className="block text-gray-100">Webdesign</motion.span>
-             <motion.span variants={FADE_IN_VARIANTS} className="block text-transparent bg-clip-text bg-gradient-to-br from-orange-400 via-orange-200 to-white pb-2">& Grafikdesign.</motion.span>
+             <motion.span variants={FADE_IN_VARIANTS} className="block text-gray-100">Webdesign Freelancer</motion.span>
+             <motion.span variants={FADE_IN_VARIANTS} className="block text-transparent bg-clip-text bg-gradient-to-br from-orange-400 via-orange-200 to-white pb-2">& Website kaufen.</motion.span>
            </motion.h1>
 
           {/* Description */}
@@ -123,7 +124,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
             transition={{ delay: 0.5 }}
             className="mt-6 max-w-2xl text-lg text-gray-400 leading-relaxed"
           >
-            Ich verwandle komplexe Ideen in digitale Erlebnisse. Visuelle Exzellenz für Marken, die nicht nur gesehen, sondern verstanden werden wollen.
+            Professionelles Website Design günstig erstellen lassen. Ich verwandle komplexe Ideen in digitale Erlebnisse. Visuelle Exzellenz für Marken, die verkaufen wollen.
           </motion.p>
 
           {/* Buttons */}
@@ -139,7 +140,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
                 variant="secondary"
                 className="w-full sm:w-auto cursor-pointer"
             >
-                <Mail className="w-5 h-5" /> PROJEKT ANFRAGEN
+                <Mail className="w-5 h-5" /> ANGEBOT ANFRAGEN
             </LiquidButton>
 
             <LiquidButton 
@@ -171,14 +172,14 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
              {duplicatedImages.map((src, index) => (
             <div
               key={index}
-              className="relative aspect-[4/3] h-32 md:h-44 flex-shrink-0 grayscale-[50%] opacity-60"
+              className="relative aspect-[4/3] h-32 md:h-44 flex-shrink-0 grayscale-[50%] opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer pointer-events-auto"
               style={{
                 rotate: `${index % 2 === 0 ? -2 : 2}deg`,
               }}
             >
               <img
                 src={src}
-                alt={`Showcase image ${index + 1}`}
+                alt={`Webdesign Referenz Beispiel ${index + 1}`}
                 className="w-full h-full object-cover rounded-xl border border-white/10 shadow-lg"
               />
             </div>

@@ -16,20 +16,20 @@ interface ServiceDetail {
 const webServices: ServiceDetail[] = [
   { 
     id: 'onepager', 
-    title: 'High-Performance Onepager', 
-    desc: 'Eine Seite, ein Ziel: Verkaufen. Perfekt für Launches, Events oder Personenmarken. Keine Ablenkung, pure Conversion.',
+    title: 'Günstige Onepager Website', 
+    desc: 'Eine Seite, ein Ziel: Verkaufen. Perfekt, wenn du eine professionelle Website günstig erstellen lassen möchtest. Ideal für Launches & Events.',
     icon: LayoutTemplate
   },
   { 
     id: 'corporate', 
-    title: 'Corporate Websites', 
-    desc: 'Mehrseitige, skalierbare Architekturen für Unternehmen. CMS-basiert (du kannst Texte ändern), SEO-optimiert und sicher.',
+    title: 'Firmen Website kaufen', 
+    desc: 'Mehrseitige, skalierbare Architekturen für Unternehmen. CMS-basiert (selbst pflegbar), SEO-optimiert und sicher.',
     icon: Monitor
   },
   { 
     id: 'tech', 
     title: 'React & Next.js Dev', 
-    desc: 'Kein Baukasten-Limit. Ich code individuelle Funktionen, Kalkulatoren und interaktive Erlebnisse, die WordPress nicht kann.',
+    desc: 'Kein Baukasten-Limit. Ich programmiere individuelle Web-Apps, Kalkulatoren und interaktive Erlebnisse, die WordPress nicht kann.',
     icon: Code2
   }
 ];
@@ -37,8 +37,8 @@ const webServices: ServiceDetail[] = [
 const graphicServices: ServiceDetail[] = [
   { 
     id: 'branding', 
-    title: 'Logo & Identity', 
-    desc: 'Das Gesicht deiner Marke. Einzigartige Logos, die Professionalität ausstrahlen und im Gedächtnis bleiben.',
+    title: 'Logo Design & Identity', 
+    desc: 'Das Gesicht deiner Marke. Einzigartige Logos kaufen, die Professionalität ausstrahlen und im Gedächtnis bleiben.',
     icon: Layers
   },
   { 
@@ -49,13 +49,13 @@ const graphicServices: ServiceDetail[] = [
   },
   { 
     id: 'cards', 
-    title: 'Visitenkarten', 
+    title: 'Visitenkarten Design', 
     desc: 'Der erste Eindruck zählt. Veredelte Visitenkarten mit modernem Layout, die man gerne in die Hand nimmt.',
     icon: CreditCard
   },
   { 
     id: 'menu', 
-    title: 'Speisekarten', 
+    title: 'Speisekarten Gestaltung', 
     desc: 'Appetit auf den ersten Blick. Stilvolles Gastronomie-Design für Restaurants, Bars und Cafés.',
     icon: Utensils
   }
@@ -263,7 +263,7 @@ export const Features: React.FC = () => {
                 </span>
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                Wähle deinen Fokus. Ich liefere keine halben Sachen, sondern spezialisierte Lösungen in zwei Kernbereichen.
+                Wähle deinen Fokus. Website kaufen oder Branding gestalten lassen? Ich liefere spezialisierte Lösungen in zwei Kernbereichen.
             </p>
         </div>
 
@@ -315,10 +315,10 @@ export const Features: React.FC = () => {
                                 </div>
                                 <h3 className="text-3xl font-bold text-white mb-4">
                                     Websites, die arbeiten. <br/>
-                                    <span className="text-gray-500">Nicht nur existieren.</span>
+                                    <span className="text-gray-500">Und verkaufen.</span>
                                 </h3>
                                 <p className="text-gray-400 mb-8 leading-relaxed">
-                                    Deine Website ist dein bester Mitarbeiter. Sie muss schnell sein, bei Google gefunden werden und Besucher psychologisch zur Anfrage führen. Ich programmiere individuelle Lösungen, keine Baukasten-Kompromisse.
+                                    Deine Website ist dein bester Mitarbeiter. Sie muss schnell sein, bei Google gefunden werden und Besucher psychologisch zur Anfrage führen. Du willst eine Website günstig erstellen lassen, die trotzdem High-End performt? Dann bist du hier richtig.
                                 </p>
                                 <ServiceList items={webServices} color="green" />
                             </div>
