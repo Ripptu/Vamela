@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Monitor, Layers, Code2, PenTool, LayoutTemplate, Printer, CreditCard, Utensils, ChevronLeft, ChevronRight, RotateCw, ExternalLink, Cpu } from 'lucide-react';
+import { Monitor, Layers, Code2, PenTool, LayoutTemplate, Printer, CreditCard, Utensils, ExternalLink, Cpu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // --- Types & Data ---
@@ -93,147 +93,53 @@ const WebProjectsVisual = () => {
     const projects = [
         { 
             title: "Thomas Rott", 
-            url: "https://thomasrott.de", // HTTPS is required for iframes
+            url: "https://thomasrott.de",
             displayUrl: "thomasrott.de",
+            category: "Portfolio & Corporate",
             status: "Live",
-            description: "Portfolio & Corporate"
+            color: "emerald"
         },
         { 
             title: "Architekturbüro H.", 
-            url: "https://example.com", 
+            url: "#", 
             displayUrl: "architektur-h.de",
+            category: "Minimalist Architecture",
             status: "Concept",
-             description: "Minimalist Architecture"
+             color: "gray"
         },
         { 
             title: "Startup X", 
-            url: "https://example.com", 
+            url: "#", 
             displayUrl: "startup-x.io",
+            category: "SaaS Landing Page",
             status: "In Dev",
-             description: "SaaS Landing Page"
+             color: "blue"
         }
     ];
 
-    const [activeProject, setActiveProject] = useState(projects[0]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    const handleProjectChange = (project: typeof projects[0]) => {
-        setIsLoading(true);
-        setActiveProject(project);
-    };
-
     return (
-        <div className="w-full h-full flex flex-col bg-[#0A0A0C] border border-white/10 rounded-xl shadow-2xl overflow-hidden">
-            
-            {/* Browser Toolbar */}
-            <div className="h-12 bg-[#1A1A1D] border-b border-white/5 flex items-center px-4 gap-4 shrink-0">
-                {/* Window Controls */}
-                <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
-                </div>
-
-                {/* Navigation Controls */}
-                <div className="flex gap-2 text-gray-500">
-                    <ChevronLeft className="w-4 h-4" />
-                    <ChevronRight className="w-4 h-4" />
-                    <RotateCw className={`w-4 h-4 hover:text-white cursor-pointer ${isLoading ? 'animate-spin' : ''}`} onClick={() => setIsLoading(true)} />
-                </div>
-
-                {/* Address Bar */}
-                <div className="flex-1 bg-[#0A0A0C] h-7 rounded-md flex items-center px-3 text-xs font-mono text-gray-400 border border-white/5">
-                    <span className="text-green-500 mr-2">🔒</span>
-                    {activeProject.displayUrl}
-                </div>
-                
-                {/* External Link Action */}
-                <a href={activeProject.url} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white">
-                    <ExternalLink className="w-4 h-4" />
+        <div className="w-full h-full flex flex-col justify-center gap-4 px-4 sm:px-0">
+             <div className="text-sm text-gray-500 font-mono mb-2 uppercase tracking-widest pl-1">Ausgewählte Projekte</div>
+             {projects.map((p, i) => (
+                <a 
+                    key={i} 
+                    href={p.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between p-5 rounded-xl border border-white/10 bg-[#0A0A0C] hover:bg-white/5 hover:border-green-500/30 transition-all duration-300 hover:scale-[1.01]"
+                >
+                    <div className="flex flex-col">
+                        <span className="text-white font-bold text-lg group-hover:text-green-400 transition-colors">{p.title}</span>
+                        <span className="text-xs text-gray-500 font-mono mt-0.5">{p.category}</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                         <span className="text-xs text-gray-600 hidden sm:block font-mono">{p.displayUrl}</span>
+                         <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-green-500/20 group-hover:text-green-400 transition-all">
+                             <ExternalLink className="w-4 h-4" />
+                         </div>
+                    </div>
                 </a>
-            </div>
-
-            {/* Main Content Area (Split: List + Iframe) */}
-            <div className="flex flex-1 overflow-hidden">
-                
-                {/* Sidebar Project List */}
-                <div className="w-1/3 border-r border-white/5 bg-[#121214] flex flex-col overflow-y-auto">
-                    <div className="p-3 text-[10px] font-bold text-gray-500 uppercase tracking-widest sticky top-0 bg-[#121214] z-10">
-                        Selected Work
-                    </div>
-                    {projects.map((p, i) => (
-                        <button
-                            key={i}
-                            onClick={() => handleProjectChange(p)}
-                            className={`p-4 text-left border-b border-white/5 transition-all hover:bg-white/5 relative ${activeProject.title === p.title ? 'bg-white/5' : ''}`}
-                        >
-                            {activeProject.title === p.title && (
-                                <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-green-500"></div>
-                            )}
-                            <div className={`text-sm font-bold mb-1 ${activeProject.title === p.title ? 'text-white' : 'text-gray-400'}`}>
-                                {p.title}
-                            </div>
-                            <div className="text-[10px] text-gray-500">{p.description}</div>
-                        </button>
-                    ))}
-                </div>
-
-                {/* Viewport (The Website) - Full Scaled View */}
-                <div className="flex-1 relative bg-[#050505] flex items-center justify-center overflow-hidden">
-                    
-                    {/* Loading State */}
-                    {isLoading && (
-                        <div className="absolute inset-0 z-20 bg-[#1A1A1D] flex items-center justify-center">
-                            <div className="flex flex-col items-center gap-2">
-                                <div className="w-8 h-8 border-2 border-green-500 border-t-transparent rounded-full animate-spin"></div>
-                                <span className="text-xs text-gray-500 font-mono">Loading {activeProject.displayUrl}...</span>
-                            </div>
-                        </div>
-                    )}
-                    
-                    {/* Scaled Desktop Preview - Non-Interactive (except scroll potentially) */}
-                    <div className="w-full h-full relative overflow-hidden">
-                        {activeProject.displayUrl === "thomasrott.de" ? (
-                            // Use a scaling transform to show a full 1440px desktop view inside the container
-                            // Assuming container is approx 400-500px wide, we need roughly 30-35% scale
-                            // We use CSS container queries or percentages to make it responsive
-                            <div className="w-[400%] h-[400%] origin-top-left transform scale-25"> 
-                                <iframe 
-                                    src={activeProject.url}
-                                    className="w-full h-full border-0"
-                                    title="Project Preview"
-                                    onLoad={() => setIsLoading(false)}
-                                    // pointer-events-none prevents scrolling/clicking inside the tiny iframe if desired, 
-                                    // or remove to allow scrolling
-                                />
-                            </div>
-                        ) : (
-                            // Fallback Placeholder
-                            <div className="w-full h-full bg-[#E5E5E5] overflow-y-auto relative" onLoad={() => setIsLoading(false)}>
-                                <div className="h-[10%] bg-gray-300 animate-pulse m-4 rounded"></div>
-                                <div className="grid grid-cols-2 gap-4 mx-4">
-                                    <div className="h-[200px] bg-gray-300 animate-pulse rounded"></div>
-                                    <div className="h-[200px] bg-gray-300 animate-pulse rounded"></div>
-                                </div>
-                                <div className="h-[40%] bg-gray-300 animate-pulse m-4 rounded"></div>
-                                
-                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                    <div className="bg-black/80 text-white px-4 py-2 rounded-lg text-sm font-bold backdrop-blur-md">
-                                        Concept Preview: {activeProject.title}
-                                    </div>
-                                </div>
-                                {/* Dummy image to trigger onLoad for loader logic */}
-                                <img 
-                                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" 
-                                    alt="" 
-                                    onLoad={() => setIsLoading(false)} 
-                                    className="hidden"
-                                />
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
+             ))}
         </div>
     );
 };
@@ -362,7 +268,7 @@ export const Features: React.FC = () => {
         </div>
 
         {/* THE COMMAND CENTER INTERFACE */}
-        <div className="bg-[#0F0F11] border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:min-h-[600px]">
+        <div className="bg-[#0F0F11] border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:min-h-[500px]">
             
             {/* Top Bar / Switcher */}
             <div className="flex border-b border-white/5">
@@ -416,7 +322,7 @@ export const Features: React.FC = () => {
                                 </p>
                                 <ServiceList items={webServices} color="green" />
                             </div>
-                            <div className="order-1 lg:order-2 h-[400px]">
+                            <div className="order-1 lg:order-2 flex flex-col justify-center">
                                 <WebProjectsVisual />
                             </div>
                         </motion.div>

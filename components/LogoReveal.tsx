@@ -110,32 +110,67 @@ export const LogoReveal: React.FC = () => {
     controls.start({ opacity: 1, scale: 1 });
   };
 
+  // Text Animation Variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.2,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      filter: 'blur(0px)',
+      transition: { 
+        type: "spring", 
+        stiffness: 50,
+        damping: 20
+      }
+    }
+  };
+
   return (
     <section className="py-24 px-6 bg-[#050505] relative overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16">
         
-        {/* Text Side */}
-        <div className="flex-1 order-2 md:order-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-orange-500 font-medium mb-6">
+        {/* Text Side - Animated Entrance */}
+        <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="flex-1 order-2 md:order-1"
+        >
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-orange-500 font-medium mb-6">
                 <Eraser className="w-3 h-3" /> REBRANDING MAGIC
-            </div>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            </motion.div>
+            
+            <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
                 Leg den Staub <br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-white">
                     der Vergangenheit ab.
                 </span>
-            </h2>
-            <p className="text-gray-400 leading-relaxed mb-8 text-lg">
-                Viele Marken haben einen brillanten Kern, der unter veralteter Optik und staubigen Strukturen verborgen liegt. Wir radieren das Durchschnittliche weg und legen deine wahre Identität frei.
-            </p>
+            </motion.h2>
             
-            <button 
+            <motion.p variants={itemVariants} className="text-gray-400 leading-relaxed mb-8 text-lg">
+                Viele Marken haben einen brillanten Kern, der unter veralteter Optik und staubigen Strukturen verborgen liegt. Wir radieren das Durchschnittliche weg und legen deine wahre Identität frei.
+            </motion.p>
+            
+            <motion.button 
+                variants={itemVariants}
                 onClick={reset}
                 className="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors underline underline-offset-4 decoration-white/20 hover:decoration-white"
             >
                 <RefreshCcw className="w-4 h-4" /> Animation zurücksetzen
-            </button>
-        </div>
+            </motion.button>
+        </motion.div>
 
         {/* Interactive Canvas Side */}
         <div className="flex-1 order-1 md:order-2 flex justify-center w-full">
@@ -145,11 +180,16 @@ export const LogoReveal: React.FC = () => {
             >
                 {/* BACK LAYER (The New Brand) */}
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-purple-600 flex items-center justify-center p-8">
-                    <div className="text-center transform rotate-[-5deg]">
+                    <motion.div 
+                        initial={{ scale: 0.9 }}
+                        animate={{ scale: [0.95, 1.05, 0.95] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        className="text-center transform rotate-[-5deg]"
+                    >
                         <Sparkles className="w-16 h-16 text-white mx-auto mb-4 animate-pulse" />
                         <h3 className="text-4xl font-black text-white tracking-tighter mb-2">NEUE ÄRA</h3>
                         <p className="text-white/80 font-mono text-xs uppercase tracking-widest">Premium Brand Identity</p>
-                    </div>
+                    </motion.div>
                     {/* Shine Effect */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent translate-x-[-100%] animate-[shimmer_3s_infinite]" />
                 </div>

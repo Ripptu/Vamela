@@ -25,8 +25,13 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
   const FADE_IN_VARIANTS = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 20 } },
+    hidden: { opacity: 0, y: 30, filter: 'blur(10px)' },
+    show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { type: "spring", stiffness: 100, damping: 20 } },
+  };
+
+  const LETTER_VARIANTS = {
+    hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
+    show: { opacity: 1, y: 0, filter: 'blur(0px)' },
   };
 
   // Mouse Tracking Logic
@@ -100,7 +105,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
                 hidden: {},
                 show: {
                     transition: {
-                        staggerChildren: 0.1,
+                        staggerChildren: 0.15,
                     },
                 },
             }}
