@@ -29,11 +29,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
     show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 20 } },
   };
 
-  // Mouse Glow Logic
+  // Mouse Tracking Logic
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
-  // Smooth out the mouse movement
+  // Smooth out the mouse movement for the effect
   const springConfig = { damping: 25, stiffness: 150 };
   const mouseXSpring = useSpring(mouseX, springConfig);
   const mouseYSpring = useSpring(mouseY, springConfig);
@@ -45,8 +45,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
     mouseY.set(clientY - top);
   };
 
-  // Create a radial gradient mask that follows the mouse
-  const background = useMotionTemplate`radial-gradient(400px circle at ${mouseXSpring}px ${mouseYSpring}px, rgba(255, 255, 255, 0.08), transparent 80%)`;
+  // Create a mask that moves with the mouse to reveal the grid
+  const maskImage = useMotionTemplate`radial-gradient(350px circle at ${mouseXSpring}px ${mouseYSpring}px, black, transparent)`;
 
   // Duplicate images for seamless loop
   const duplicatedImages = [...HERO_IMAGES, ...HERO_IMAGES];
@@ -58,10 +58,22 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
     >
        
        {/* Background Effects */}
-       {/* Mouse Follow Glow */}
+       
+       {/* Static Warm White Glow (Center) */}
+       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[radial-gradient(ellipse_at_center,rgba(255,245,235,0.08),transparent_70%)] blur-[80px] pointer-events-none z-0" />
+
+       {/* Mouse Revealed Grid Effect */}
        <motion.div
-            className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-            style={{ background }}
+            className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-500 opacity-0 group-hover:opacity-100"
+            style={{ 
+                maskImage,
+                WebkitMaskImage: maskImage,
+                backgroundImage: `
+                    linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
+                `,
+                backgroundSize: '40px 40px'
+            }}
        />
        
        <div className="z-20 flex flex-col items-center max-w-5xl mb-24 md:mb-12">
