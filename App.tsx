@@ -29,13 +29,17 @@ function App() {
     return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
-  // Smooth Scroll - Optimized settings
+  // Smooth Scroll - Optimized settings for 120FPS feel
   useEffect(() => {
      const lenis = new Lenis({
         duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential decay for premium feel
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
         smoothWheel: true,
+        wheelMultiplier: 1,
         touchMultiplier: 2,
+        infinite: false,
      });
      
      const raf = (time: number) => {
@@ -71,8 +75,8 @@ function App() {
       {/* Contact Modal */}
       <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
 
-      {/* Optimized Noise Texture */}
-      <div className="fixed inset-0 pointer-events-none z-[50] opacity-[0.04] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+      {/* Optimized Noise Texture - hardware accelerated via CSS in index.html/global styles typically, but ensuring low opacity here */}
+      <div className="fixed inset-0 pointer-events-none z-[50] opacity-[0.04] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay will-change-transform"></div>
       
       {/* No Navbar here anymore */}
 

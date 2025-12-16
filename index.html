@@ -161,8 +161,42 @@
         --card: 240 10% 3.9%;
         --card-foreground: 0 0% 98%;
       }
+      
+      html.lenis, html.lenis body {
+        height: auto;
+      }
+      
+      .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+      }
+      
+      .lenis.lenis-smooth [data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+      
+      .lenis.lenis-scrolling iframe {
+        pointer-events: none;
+      }
+
+      /* Global Performance Enhancements */
+      * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        box-sizing: border-box;
+      }
+
+      /* Reduce layout thrashing on key elements */
+      .transform-gpu {
+          transform: translate3d(0,0,0);
+          backface-visibility: hidden;
+      }
+
       html {
-          scroll-behavior: smooth; 
+          scroll-behavior: auto; /* Let Lenis handle it */
           cursor: auto; 
       }
       
