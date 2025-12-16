@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Monitor, Layers, Code2, PenTool, LayoutTemplate, Printer, CreditCard, Utensils, ExternalLink, Cpu } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Monitor, Layers, Code2, PenTool, LayoutTemplate, Printer, CreditCard, Utensils, ExternalLink, Cpu, MoveLeft, MoveRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // --- Types & Data ---
@@ -61,6 +61,22 @@ const graphicServices: ServiceDetail[] = [
   }
 ];
 
+// --- Shared Data (from Hero) ---
+const REFERENCE_LOGOS = [
+  "https://mir-s3-cdn-cf.behance.net/project_modules/hd/f8e7b5105213155.5f742224dbf68.jpg",
+  "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/309826105213155.5f742224de498.jpg",
+  "https://i.ytimg.com/vi/RPgOaElGsGc/maxresdefault.jpg",
+  "https://cdn.dribbble.com/userupload/41573963/file/original-ac839f228c8ebe7139e7a9cfcae7d3fa.png?resize=400x0",
+  "https://marketplace.canva.com/EAFLXoWGglA/2/0/1600w/canva-beige-and-black-trendy-minimalist-new-abstract-store-logo-u5oX0PaKeUM.jpg",
+  "https://cdn.dribbble.com/userupload/43854809/file/original-2983c03c67efe234428ea8a83df572a2.png?resize=400x0",
+  "https://i0.wp.com/graphicdesignjunction.com/wp-content/uploads/2024/08/mountain_%26_dog_logo.jpg?resize=890%2C668&ssl=1",
+  "https://www.logoai.com/uploads/output/2025/06/20/1aaf5e339a9a9bb5c0a92b728316e901.jpg",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBhMSVfRmiE-2ghs82gymc4luLqKdEWYk6jQ&s",
+  "https://cdn.dribbble.com/userupload/45066279/file/d44190eb7835505a9882ef81e92530c0.png?resize=400x0",
+  "https://www.inkyy.com/wp-content/uploads/2018/12/suitcase.png",
+  "https://i.postimg.cc/mDKysVKh/ssss.png"
+];
+
 // --- Components ---
 
 const ServiceList = ({ items, color }: { items: ServiceDetail[], color: string }) => (
@@ -100,12 +116,12 @@ const WebProjectsVisual = () => {
             color: "emerald"
         },
         { 
-            title: "Architekturbüro H.", 
-            url: "#", 
-            displayUrl: "architektur-h.de",
-            category: "Minimalist Architecture",
-            status: "Concept",
-             color: "gray"
+            title: "Neustädter Barber", 
+            url: "https://barbermoosburg.netlify.app", 
+            displayUrl: "barbermoosburg.app",
+            category: "Barbershop Website",
+            status: "Live",
+             color: "orange"
         },
         { 
             title: "Startup X", 
@@ -145,86 +161,72 @@ const WebProjectsVisual = () => {
 };
 
 const GraphicReferencesVisual = () => {
+    const containerRef = useRef<HTMLDivElement>(null);
+
     return (
-        <div className="w-full h-full bg-[#1A1A1D] rounded-xl border border-white/10 relative overflow-hidden flex items-center justify-center shadow-2xl">
+        <div className="w-full h-full bg-[#1A1A1D] rounded-xl border border-white/10 relative overflow-hidden flex flex-col shadow-2xl">
              {/* Background Texture */}
              <div className="absolute inset-0 bg-[#1A1A1D]" />
-             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03),transparent_70%)]" />
+             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,165,0,0.05),transparent_70%)]" />
              
-             {/* 4 Floating Reference Placeholders - Refined "Paper" Look */}
-             <div className="relative w-full h-full perspective-[800px]">
-                 
-                 {/* 1. Flyer - Portrait, White Paper style */}
-                 <motion.div 
-                    animate={{ y: [0, -10, 0], rotateZ: [-15, -12, -15] }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-12 left-12 w-24 h-36 bg-white rounded shadow-xl flex flex-col p-2 z-10 origin-bottom-left will-change-transform"
-                    style={{ rotate: -15 }}
-                 >
-                     <div className="w-full h-1/2 bg-gray-200 rounded-sm mb-2 overflow-hidden">
-                        <div className="w-full h-full bg-gradient-to-br from-orange-400 to-red-500 opacity-80"></div>
-                     </div>
-                     <div className="w-full h-1.5 bg-gray-200 rounded-full mb-1"></div>
-                     <div className="w-2/3 h-1.5 bg-gray-200 rounded-full mb-1"></div>
-                     <div className="mt-auto flex justify-end">
-                        <div className="w-4 h-4 rounded-full bg-black/10"></div>
-                     </div>
-                 </motion.div>
+             {/* Header */}
+             <div className="relative z-10 p-6 flex justify-between items-center border-b border-white/5 bg-[#1A1A1D]/80 backdrop-blur-sm">
+                 <div className="flex items-center gap-2 text-xs text-orange-500 font-mono uppercase tracking-widest">
+                    <Layers className="w-4 h-4" /> Branding Gallery
+                 </div>
+                 <div className="flex items-center gap-2 text-gray-500 text-[10px] uppercase tracking-wide">
+                     <MoveLeft className="w-3 h-3" /> Swipe <MoveRight className="w-3 h-3" />
+                 </div>
+             </div>
 
-                 {/* 2. Logo - Square, High Contrast */}
-                 <motion.div 
-                    animate={{ y: [0, -15, 0], scale: [1, 1.05, 1] }}
-                    transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute top-20 right-16 w-28 h-28 bg-[#000] rounded-xl border border-gray-800 shadow-2xl flex items-center justify-center z-20 will-change-transform"
-                    style={{ rotate: 10 }}
-                 >
-                     <div className="w-16 h-16 border-2 border-white/20 rounded-full flex items-center justify-center">
-                         <div className="w-8 h-8 border border-white/40 transform rotate-45"></div>
-                     </div>
-                 </motion.div>
+             {/* Swipable Carousel */}
+             <div className="flex-1 relative overflow-hidden flex items-center" ref={containerRef}>
+                <motion.div 
+                    drag="x"
+                    dragConstraints={{ left: -1000, right: 0 }} // Simplified constraints allowing free movement
+                    whileTap={{ cursor: "grabbing" }}
+                    className="flex gap-6 px-8 cursor-grab active:cursor-grabbing items-center"
+                >
+                    {REFERENCE_LOGOS.map((src, idx) => (
+                        <motion.div
+                            key={idx}
+                            className="relative min-w-[200px] h-[200px] rounded-2xl overflow-hidden group border border-white/10 bg-[#0F0F11] shadow-xl"
+                            whileHover={{ scale: 1.05, y: -5 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            {/* Darken Overlay initially */}
+                            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10" />
+                            
+                            {/* The Image */}
+                            <img 
+                                src={src} 
+                                alt={`Graphic Design Reference ${idx}`}
+                                className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
+                            />
 
-                 {/* 3. Business Cards - Overlapping Stack */}
-                 <motion.div 
-                    animate={{ y: [0, -8, 0] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                    className="absolute bottom-24 left-24 z-30 will-change-transform"
-                 >
-                      {/* Card Bottom */}
-                      <div className="absolute top-2 left-2 w-32 h-20 bg-gray-100 rounded shadow-md transform rotate-6 border border-gray-200"></div>
-                      {/* Card Top */}
-                      <div className="relative w-32 h-20 bg-white rounded shadow-xl transform -rotate-3 border border-gray-100 p-3 flex flex-col justify-between">
-                          <div className="flex justify-between items-start">
-                             <div className="w-4 h-4 rounded-full bg-orange-500"></div>
-                             <div className="w-8 h-1 bg-gray-200"></div>
-                          </div>
-                          <div>
-                              <div className="w-16 h-1.5 bg-gray-800 mb-1"></div>
-                              <div className="w-10 h-1 bg-gray-400"></div>
-                          </div>
-                      </div>
-                 </motion.div>
+                            {/* Hover Badge */}
+                            <div className="absolute bottom-3 left-3 z-20 opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
+                                <span className="px-2 py-1 bg-white text-black text-[10px] font-bold rounded shadow-lg uppercase tracking-wide">
+                                    Project {idx + 1}
+                                </span>
+                            </div>
+                        </motion.div>
+                    ))}
+                    
+                    {/* End Card */}
+                    <div className="min-w-[150px] flex flex-col items-center justify-center gap-2 opacity-50">
+                        <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center">
+                            <PenTool className="w-5 h-5 text-gray-400" />
+                        </div>
+                        <span className="text-xs text-gray-500 uppercase tracking-widest">Dein Projekt?</span>
+                    </div>
 
-                 {/* 4. Menu / Tall Card - Elegant */}
-                 <motion.div 
-                    animate={{ y: [0, -12, 0], rotateZ: [5, 8, 5] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                    className="absolute bottom-10 right-24 w-20 h-40 bg-[#F5F5F0] rounded shadow-lg p-2 z-10 flex flex-col items-center border border-gray-200 will-change-transform"
-                    style={{ rotate: 5 }}
-                 >
-                     <div className="text-[6px] tracking-[2px] uppercase mb-3 mt-1 text-gray-500 font-serif">Menu</div>
-                     <div className="w-12 h-0.5 bg-black/10 mb-2"></div>
-                     <div className="space-y-1.5 w-full px-1">
-                         <div className="flex justify-between w-full"><div className="w-8 h-0.5 bg-gray-300"></div><div className="w-2 h-0.5 bg-gray-300"></div></div>
-                         <div className="flex justify-between w-full"><div className="w-6 h-0.5 bg-gray-300"></div><div className="w-2 h-0.5 bg-gray-300"></div></div>
-                         <div className="flex justify-between w-full"><div className="w-9 h-0.5 bg-gray-300"></div><div className="w-2 h-0.5 bg-gray-300"></div></div>
-                     </div>
-                 </motion.div>
-
+                </motion.div>
              </div>
 
              {/* UI Overlay Label */}
-             <div className="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-black/50 border border-white/10 backdrop-blur-md text-[10px] text-gray-400 uppercase tracking-widest z-40">
-                Print & Identity
+             <div className="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-black/50 border border-white/10 backdrop-blur-md text-[10px] text-gray-400 uppercase tracking-widest z-40 pointer-events-none">
+                Interactive Showcase
              </div>
         </div>
     );
