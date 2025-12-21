@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Monitor, Layers, Code2, PenTool, LayoutTemplate, Printer, CreditCard, Utensils, ExternalLink, Cpu, MoveLeft, MoveRight, Smartphone, Tablet, Laptop } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { PenTool, Code2, ExternalLink, Cpu, MoveLeft, MoveRight, Laptop, Layout, Building2, Printer, CreditCard, Utensils, Palette } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // --- Types & Data ---
@@ -10,7 +10,7 @@ interface ServiceDetail {
   id: string;
   title: string;
   desc: string;
-  icon: React.ElementType;
+  icon: React.ElementType; 
 }
 
 const webServices: ServiceDetail[] = [
@@ -18,13 +18,13 @@ const webServices: ServiceDetail[] = [
     id: 'onepager', 
     title: 'Günstige Onepager Website', 
     desc: 'Eine Seite, ein Ziel: Verkaufen. Perfekt, wenn du eine professionelle Website günstig erstellen lassen möchtest. Ideal für Launches & Events.',
-    icon: LayoutTemplate
+    icon: Layout
   },
   { 
     id: 'corporate', 
     title: 'Firmen Website kaufen', 
     desc: 'Mehrseitige, skalierbare Architekturen für Unternehmen. CMS-basiert (selbst pflegbar), SEO-optimiert und sicher.',
-    icon: Monitor
+    icon: Building2
   },
   { 
     id: 'tech', 
@@ -39,7 +39,7 @@ const graphicServices: ServiceDetail[] = [
     id: 'branding', 
     title: 'Logo Design & Identity', 
     desc: 'Das Gesicht deiner Marke. Einzigartige Logos kaufen, die Professionalität ausstrahlen und im Gedächtnis bleiben.',
-    icon: Layers
+    icon: PenTool
   },
   { 
     id: 'print', 
@@ -61,7 +61,6 @@ const graphicServices: ServiceDetail[] = [
   }
 ];
 
-// --- Shared Data (from Hero) ---
 const REFERENCE_LOGOS = [
   "https://mir-s3-cdn-cf.behance.net/project_modules/hd/f8e7b5105213155.5f742224dbf68.jpg",
   "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/309826105213155.5f742224de498.jpg",
@@ -81,28 +80,32 @@ const REFERENCE_LOGOS = [
 
 const ServiceList = ({ items, color }: { items: ServiceDetail[], color: string }) => (
   <div className="space-y-6">
-    {items.map((item, idx) => (
-      <motion.div 
-        key={item.id}
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: idx * 0.1 }}
-        className="group relative pl-6 border-l border-white/10 hover:border-white/30 transition-colors"
-      >
-         <div className={`absolute left-[-1px] top-0 bottom-0 w-[1px] bg-${color}-500 scale-y-0 group-hover:scale-y-100 transition-transform origin-top duration-300`} />
-         
-         <div className="flex items-center gap-3 mb-2">
-            <item.icon className={`w-5 h-5 text-${color}-500`} />
-            <h3 className="text-lg font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all">
-                {item.title}
-            </h3>
-         </div>
-         {/* Rule 4: Use white with opacity */}
-         <p className="text-sm text-white/50 leading-relaxed max-w-md">
-            {item.desc}
-         </p>
-      </motion.div>
-    ))}
+    {items.map((item, idx) => {
+      const Icon = item.icon;
+      return (
+        <motion.div 
+          key={item.id}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: idx * 0.1 }}
+          className="group relative pl-6 border-l border-white/10 hover:border-white/30 transition-colors"
+        >
+           <div className={`absolute left-[-1px] top-0 bottom-0 w-[1px] bg-${color}-500 scale-y-0 group-hover:scale-y-100 transition-transform origin-top duration-300`} />
+           
+           <div className="flex items-center gap-3 mb-2">
+              <div className={`w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center border border-white/5`}>
+                  <Icon className={`w-4 h-4 text-${color}-400 group-hover:scale-110 transition-transform`} />
+              </div>
+              <h3 className="text-lg font-bold text-white group-hover:text-${color}-500 transition-colors">
+                  {item.title}
+              </h3>
+           </div>
+           <p className="text-sm text-white/50 leading-relaxed max-w-md">
+              {item.desc}
+           </p>
+        </motion.div>
+      );
+    })}
   </div>
 );
 
@@ -110,24 +113,9 @@ const WebProjectsVisual = () => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     const projects = [
-        { 
-            title: "Thomas Rott", 
-            url: "https://thomasrott.de",
-            displayUrl: "thomasrott.de",
-            category: "Portfolio",
-        },
-        { 
-            title: "Neustädter Barber", 
-            url: "https://barbermoosburg.netlify.app", 
-            displayUrl: "barbermoosburg.app",
-            category: "Business",
-        },
-        { 
-            title: "Coremis", 
-            url: "https://coremis2.netlify.app", 
-            displayUrl: "coremis2.app",
-            category: "Corporate",
-        }
+        { title: "Thomas Rott", url: "https://thomasrott.de", displayUrl: "thomasrott.de", category: "Portfolio" },
+        { title: "Neustädter Barber", url: "https://barbermoosburg.netlify.app", displayUrl: "barbermoosburg.app", category: "Business" },
+        { title: "Coremis", url: "https://coremis2.netlify.app", displayUrl: "coremis2.app", category: "Corporate" }
     ];
 
     const activeProject = projects[activeIndex];
@@ -137,20 +125,12 @@ const WebProjectsVisual = () => {
              
              {/* MacBook Mockup */}
              <div className="relative group w-full max-w-[650px] mx-auto perspective-[2000px]">
-                
                 {/* 1. The Screen Lid */}
                 <div className="relative w-full aspect-[16/10] bg-[#0d0d0d] rounded-t-[18px] rounded-b-[6px] shadow-2xl border-[3px] border-[#1a1a1a] ring-1 ring-white/10 overflow-hidden transform-gpu transition-transform duration-500 group-hover:rotate-x-1">
-                    
-                    {/* Bezel & Content */}
                     <div className="absolute inset-[3px] sm:inset-[8px] bg-black rounded-[10px] sm:rounded-[12px] overflow-hidden relative border border-white/5">
-                        
-                        {/* Notch */}
                         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[16%] h-[16px] sm:h-[22px] bg-black z-50 rounded-b-lg flex justify-center items-center">
-                             {/* Camera Dot */}
                              <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-[#1a1a1a] border border-[#222]"></div>
                         </div>
-
-                        {/* Iframe Container - SCALED FOR DESKTOP VIEW */}
                         <div className="w-full h-full relative bg-white">
                             <AnimatePresence mode="wait">
                                 <motion.div
@@ -171,17 +151,11 @@ const WebProjectsVisual = () => {
                             </AnimatePresence>
                         </div>
                     </div>
-
-                    {/* Gloss Overlay */}
-                    <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-transparent z-40 opacity-50" />
                 </div>
-
-                {/* 2. The Base (Keyboard Area Hinge) */}
+                {/* 2. The Base */}
                 <div className="relative mx-auto w-[104%] -ml-[2%] h-[14px] bg-[#1a1a1a] rounded-b-[16px] rounded-t-[2px] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)] border-t border-[#333] flex justify-center">
-                     {/* Thumb Indent */}
                      <div className="w-[15%] h-[4px] bg-[#0d0d0d] rounded-b-md border-t border-white/5"></div>
                 </div>
-
              </div>
 
              {/* Project Switcher Tabs */}
@@ -192,8 +166,8 @@ const WebProjectsVisual = () => {
                         onClick={() => setActiveIndex(i)}
                         className={`p-3 rounded-lg border transition-all text-left group ${
                             activeIndex === i 
-                            ? 'bg-white/10 border-green-500/50 shadow-[0_0_15px_rgba(34,197,94,0.1)]' // Rule 5: Obvious state
-                            : 'bg-white/[0.03] border-white/5 hover:border-white/20' // Rule 1: Tinted black
+                            ? 'bg-white/10 border-green-500/50 shadow-[0_0_15px_rgba(34,197,94,0.1)]' 
+                            : 'bg-white/[0.03] border-white/5 hover:border-white/20'
                         }`}
                      >
                          <div className={`text-xs font-bold mb-0.5 transition-colors ${activeIndex === i ? 'text-white' : 'text-white/60 group-hover:text-white/80'}`}>
@@ -207,7 +181,6 @@ const WebProjectsVisual = () => {
                  ))}
              </div>
 
-             {/* Link */}
              <div className="w-full max-w-[650px] flex justify-end">
                 <a 
                     href={activeProject.url} 
@@ -224,68 +197,45 @@ const WebProjectsVisual = () => {
 
 const GraphicReferencesVisual = () => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [width, setWidth] = useState(0);
-
-    // Calculate draggable constraints based on content
-    useEffect(() => {
-        if (containerRef.current) {
-            // Rough estimation: (Card Width 200 + Gap 24) * Count - Container Width
-            const contentWidth = REFERENCE_LOGOS.length * 224 + 150; // +150 for end card
-            setWidth(contentWidth - containerRef.current.offsetWidth);
-        }
-    }, []);
 
     return (
         <div className="w-full h-full bg-[#0A0A0C] rounded-xl border border-white/10 relative overflow-hidden flex flex-col shadow-2xl">
-             {/* Background Texture - Rule 2: Blending modes */}
              <div className="absolute inset-0 bg-[#0A0A0C]" />
-             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,165,0,0.08),transparent_70%)] mix-blend-screen" />
+             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(251,146,60,0.08),transparent_70%)] mix-blend-screen" />
              
              {/* Header */}
              <div className="relative z-10 p-6 flex justify-between items-center border-b border-white/5 bg-[#0A0A0C]/80 backdrop-blur-sm">
                  <div className="flex items-center gap-2 text-xs text-orange-400 font-mono uppercase tracking-widest">
-                    <Layers className="w-4 h-4" /> Branding Gallery
+                    <Palette className="w-4 h-4" /> Branding Gallery
                  </div>
                  <div className="flex items-center gap-2 text-white/40 text-[10px] uppercase tracking-wide">
                      <MoveLeft className="w-3 h-3" /> Swipe <MoveRight className="w-3 h-3" />
                  </div>
              </div>
 
-             {/* Swipable Carousel */}
+             {/* Carousel */}
              <div className="flex-1 relative overflow-hidden flex items-center" ref={containerRef}>
                 <motion.div 
                     drag="x"
-                    dragConstraints={{ left: -3000, right: 0 }} // Large negative value to ensure full scroll
+                    dragConstraints={{ left: -3000, right: 0 }} 
                     whileTap={{ cursor: "grabbing" }}
                     className="flex gap-6 px-8 cursor-grab active:cursor-grabbing items-center"
                 >
                     {REFERENCE_LOGOS.map((src, idx) => (
                         <motion.div
                             key={idx}
-                            className="relative min-w-[200px] h-[200px] rounded-2xl overflow-hidden group border border-white/10 bg-white/[0.03] shadow-xl shrink-0"
+                            className="relative min-w-[200px] h-[200px] rounded-2xl overflow-hidden group border border-white/10 bg-white/[0.03] shadow-lg shrink-0"
                             whileHover={{ scale: 1.05, y: -5 }}
                             transition={{ duration: 0.3 }}
                         >
-                            {/* Darken Overlay initially */}
-                            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10" />
-                            
-                            {/* The Image */}
                             <img 
                                 src={src} 
                                 alt={`Graphic Design Reference ${idx}`}
                                 className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
                             />
-
-                            {/* Hover Badge */}
-                            <div className="absolute bottom-3 left-3 z-20 opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
-                                <span className="px-2 py-1 bg-white text-black text-[10px] font-bold rounded shadow-lg uppercase tracking-wide">
-                                    Project {idx + 1}
-                                </span>
-                            </div>
                         </motion.div>
                     ))}
                     
-                    {/* End Card */}
                     <div className="min-w-[150px] flex flex-col items-center justify-center gap-2 opacity-50 shrink-0">
                         <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center">
                             <PenTool className="w-5 h-5 text-white/40" />
@@ -294,11 +244,6 @@ const GraphicReferencesVisual = () => {
                     </div>
 
                 </motion.div>
-             </div>
-
-             {/* UI Overlay Label */}
-             <div className="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-black/50 border border-white/10 backdrop-blur-md text-[10px] text-white/60 uppercase tracking-widest z-40 pointer-events-none">
-                Interactive Showcase
              </div>
         </div>
     );
@@ -310,25 +255,24 @@ export const Features: React.FC = () => {
   return (
     <section id="services" className="py-24 px-6 bg-[#020204] relative overflow-hidden min-h-screen flex items-center">
       
-      {/* Dynamic Background based on Mode */}
+      {/* Background Gradients */}
       <AnimatePresence>
         {mode === 'web' && (
             <motion.div 
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,255,100,0.06),transparent_50%)] pointer-events-none mix-blend-screen"
+                className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,197,94,0.1),transparent_50%)] pointer-events-none mix-blend-screen"
             />
         )}
         {mode === 'graphic' && (
             <motion.div 
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,100,0,0.06),transparent_50%)] pointer-events-none mix-blend-screen"
+                className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,146,60,0.1),transparent_50%)] pointer-events-none mix-blend-screen"
             />
         )}
       </AnimatePresence>
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
         
-        {/* Header Area */}
         <div className="text-center mb-16">
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
                 Deine digitale <br/>
@@ -341,10 +285,9 @@ export const Features: React.FC = () => {
             </p>
         </div>
 
-        {/* THE COMMAND CENTER INTERFACE - Rule 1: Lighter Black / Tinted */}
+        {/* Command Center */}
         <div className="bg-white/[0.02] border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:min-h-[500px]">
             
-            {/* Top Bar / Switcher */}
             <div className="flex border-b border-white/5">
                 <button 
                     onClick={() => setMode('web')}
@@ -362,7 +305,6 @@ export const Features: React.FC = () => {
                     className={`flex-1 py-6 text-sm md:text-base font-bold uppercase tracking-widest transition-all relative ${mode === 'graphic' ? 'text-white bg-white/5 shadow-[inset_0_-2px_20px_rgba(255,255,255,0.05)]' : 'text-white/40 hover:text-white/70 hover:bg-white/[0.02]'}`}
                 >
                     <div className="flex items-center justify-center gap-3">
-                        {/* Rule 3: Desaturate orange */}
                         <PenTool className={`w-5 h-5 ${mode === 'graphic' ? 'text-orange-400' : 'text-white/30'}`} />
                         Graphic Design
                     </div>
@@ -370,11 +312,9 @@ export const Features: React.FC = () => {
                 </button>
             </div>
 
-            {/* Content Area */}
             <div className="flex-1 p-6 md:p-12 relative">
                 <AnimatePresence mode="wait">
                     
-                    {/* WEB MODE CONTENT */}
                     {mode === 'web' && (
                         <motion.div 
                             key="web"
@@ -403,7 +343,6 @@ export const Features: React.FC = () => {
                         </motion.div>
                     )}
 
-                    {/* GRAPHIC MODE CONTENT */}
                     {mode === 'graphic' && (
                         <motion.div 
                             key="graphic"
@@ -414,7 +353,6 @@ export const Features: React.FC = () => {
                             className="grid lg:grid-cols-2 gap-12 h-full items-center"
                         >
                             <div className="order-2 lg:order-1">
-                                {/* Rule 3: Orange-400 instead of 500 */}
                                 <div className="inline-block px-3 py-1 mb-6 rounded bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-mono font-bold shadow-[0_0_10px_rgba(251,146,60,0.1)]">
                                     VISUAL IMPACT: HIGH
                                 </div>
@@ -437,7 +375,6 @@ export const Features: React.FC = () => {
             </div>
         </div>
 
-        {/* Footer Note */}
         <div className="text-center mt-12 flex justify-center items-center gap-2 text-white/40 text-sm font-mono">
             <Cpu className="w-4 h-4" />
             <span>Beide Disziplinen greifen nahtlos ineinander.</span>

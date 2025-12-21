@@ -3,9 +3,6 @@ import { Instagram, ArrowUp, Mail } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (page: string) => void;
-  // Note: We could add onOpenContact here, but for the footer email link, 
-  // sometimes users actually expect a mailto. 
-  // However, keeping it consistent with the user request:
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
@@ -30,12 +27,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             
             {/* Left: Massive CTA */}
             <div>
-                <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter mb-8 leading-[0.9]">
-                    Let's make <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-white">
-                        it happen.
-                    </span>
-                </h2>
+                <div className="flex items-end gap-6 mb-8">
+                     <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter leading-[0.9]">
+                        Let's make <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-white">
+                            it happen.
+                        </span>
+                    </h2>
+                </div>
+                
                 <div className="flex flex-col md:flex-row gap-6 mt-12">
                      <a 
                         href="mailto:stockmeier.ch@gmail.com" 

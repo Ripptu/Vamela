@@ -13,9 +13,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenContact }) => 
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+    
+    // Passive listener improves scroll performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 

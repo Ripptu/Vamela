@@ -9,11 +9,14 @@ import { About } from './components/About';
 import { Impressum, Datenschutz } from './components/Legal';
 import { PriceCalculator } from './components/PriceCalculator';
 import { ContactModal } from './components/ContactModal';
+import { ExitIntentModal } from './components/ExitIntentModal';
+import { FAQ } from './components/FAQ';
 import Lenis from 'lenis';
 
 function App() {
   const [view, setView] = useState<string>('home');
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isExitModalOpen, setIsExitModalOpen] = useState(false);
 
   // Dynamic Title Logic
   useEffect(() => {
@@ -29,11 +32,70 @@ function App() {
     return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
-  // Smooth Scroll - Optimized settings for 120FPS feel
+  // PERFORMANCE OPTIMIZATION: Scroll Progress Favicon Logic
+  // Disabled on mobile devices to prevent scroll jank
   useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    if (isMobile) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = 32;
+    canvas.height = 32;
+    const ctx = canvas.getContext('2d');
+    const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+    if (!ctx || !link) return;
+
+    let ticking = false;
+
+    const updateFavicon = () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.body.offsetHeight;
+        const winHeight = window.innerHeight;
+        const scrollPercent = scrollTop / (docHeight - winHeight);
+        
+        ctx.clearRect(0, 0, 32, 32);
+        
+        // Background Circle
+        ctx.beginPath();
+        ctx.arc(16, 16, 14, 0, 2 * Math.PI);
+        ctx.fillStyle = '#020204';
+        ctx.fill();
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        // Progress Arc (Orange)
+        ctx.beginPath();
+        ctx.arc(16, 16, 14, -0.5 * Math.PI, (2 * Math.PI * scrollPercent) - 0.5 * Math.PI);
+        ctx.strokeStyle = '#f97316';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        link.href = canvas.toDataURL('image/png');
+        ticking = false;
+    };
+
+    const onScroll = () => {
+        if (!ticking) {
+            window.requestAnimationFrame(updateFavicon);
+            ticking = true;
+        }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // PERFORMANCE OPTIMIZATION: Smooth Scroll (Lenis)
+  // Disable on mobile to use native, performant scrolling
+  useEffect(() => {
+     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+     
+     if (isMobile) return; 
+
      const lenis = new Lenis({
         duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential decay for premium feel
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
         orientation: 'vertical',
         gestureOrientation: 'vertical',
         smoothWheel: true,
@@ -74,33 +136,23 @@ function App() {
       
       {/* Contact Modal */}
       <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
-
-      {/* Optimized Noise Texture - hardware accelerated via CSS in index.html/global styles typically, but ensuring low opacity here */}
-      <div className="fixed inset-0 pointer-events-none z-[50] opacity-[0.04] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay will-change-transform"></div>
       
-      {/* No Navbar here anymore */}
+      {/* Smart Exit Intent Modal */}
+      <ExitIntentModal isOpen={isExitModalOpen} setIsOpen={setIsExitModalOpen} />
 
+      {/* Optimized Noise Texture - HIDDEN ON MOBILE to save GPU */}
+      <div className="fixed inset-0 pointer-events-none z-[50] opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay hidden md:block"></div>
+      
       <main className="relative z-10">
         {view === 'home' && (
           <>
             <Hero onOpenContact={() => setIsContactModalOpen(true)} />
-            
-            {/* VALUE PROPOSITION: Was bietest du an? */}
             <Features />
-            
-            {/* DEEP DIVE: Wie arbeitest du? */}
             <Showcase />
-
-            {/* INTERACTIVE TOOL: Calculator (Conversion Booster) */}
             <PriceCalculator />
-            
-            {/* SOCIAL PROOF: Wem hast du geholfen? */}
             <Testimonials />
-            
-            {/* CONNECTION: Wer bist du? (Erst Vertrauen in Arbeit, dann in Person) */}
             <About />
-            
-            {/* ACTION */}
+            <FAQ />
             <Contact onOpenContact={() => setIsContactModalOpen(true)} />
           </>
         )}

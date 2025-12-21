@@ -22,25 +22,24 @@ export const LiquidButton: React.FC<LiquidButtonProps> = ({
   // Base Layout & Animation
   const baseStyles = "relative inline-flex items-center justify-center gap-2 px-8 py-4 font-bold text-sm md:text-base rounded-full transition-all duration-300 overflow-hidden group hover:scale-[1.03] active:scale-[0.98]";
 
-  // Aesthetic Variants - Rule 5: Make interactive states obvious (Stronger shadows/glows on hover)
+  // Aesthetic Variants - Adaptive
   const variants = {
-    // Standard High-Contrast (White)
-    primary: "bg-white text-black border border-white shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_35px_rgba(255,255,255,0.5)]",
+    // Primary: Dark on Light Mode, White on Dark Mode
+    primary: "bg-gray-900 text-white dark:bg-white dark:text-black border border-transparent shadow-lg hover:shadow-xl",
     
-    // Brand Accent (Orange Gradient) - Desaturated orange border
-    secondary: "bg-gradient-to-r from-orange-500 to-red-600 text-white border border-orange-400/50 shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_50px_rgba(249,115,22,0.6)]",
+    // Secondary: Orange Gradient (Works on both)
+    secondary: "bg-gradient-to-r from-orange-500 to-red-600 text-white border border-orange-400/50 shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50",
     
-    // WhatsApp Specific (Green Gradient)
-    whatsapp: "bg-[#25D366] text-black hover:text-white border border-[#25D366] shadow-[0_0_20px_rgba(37,211,102,0.3)] hover:shadow-[0_0_50px_rgba(37,211,102,0.6)]",
+    // WhatsApp: Brand Color
+    whatsapp: "bg-[#25D366] text-white dark:text-black border border-[#25D366] shadow-lg shadow-green-500/30 hover:shadow-green-500/50",
 
-    // Glass / Dark
-    glass: "bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+    // Glass: Adaptive
+    glass: "bg-black/5 dark:bg-white/10 backdrop-blur-md text-gray-900 dark:text-white border border-black/10 dark:border-white/20 hover:bg-black/10 dark:hover:bg-white/20"
   };
 
-  // Adjust shimmer color for visibility on light vs dark backgrounds
   const shimmerColor = variant === 'primary' 
-    ? "from-transparent via-gray-400/30 to-transparent" // Darker shimmer for white button
-    : "from-transparent via-white/40 to-transparent";    // White shimmer for colored buttons
+    ? "from-transparent via-white/20 to-transparent" 
+    : "from-transparent via-white/40 to-transparent";
 
   return (
     // @ts-ignore
@@ -49,12 +48,9 @@ export const LiquidButton: React.FC<LiquidButtonProps> = ({
       className={cn(baseStyles, variants[variant], className)}
       {...props}
     >
-      {/* Continuous Shimmer Animation - Optimized for visibility */}
+      {/* Shimmer Animation */}
       <div className={`absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r ${shimmerColor} -skew-x-12 animate-button-shine pointer-events-none`} />
       
-      {/* Hover Flash Overlay */}
-      <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
       {/* Content */}
       <span className="relative z-10 flex items-center gap-2 tracking-wide">
         {children}
