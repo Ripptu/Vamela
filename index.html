@@ -115,6 +115,11 @@
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
             },
+            colors: {
+              // Defining a "Rich Black" palette
+              background: '#020204', 
+              card: '#0A0A0C',
+            },
             animation: {
               marquee: 'marquee 25s linear infinite', 
               shimmer: 'shimmer 8s infinite',
@@ -224,7 +229,8 @@
 </script>
 </head>
 
-  <body class="bg-[#050505] text-foreground antialiased selection:bg-orange-500/30 selection:text-white">
+  <!-- Changed bg-[#050505] to bg-[#020204] for Rich Black rule -->
+  <body class="bg-[#020204] text-foreground antialiased selection:bg-orange-500/30 selection:text-white">
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   </body>

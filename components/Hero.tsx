@@ -59,14 +59,14 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
 
   return (
     <section 
-        className="relative w-full h-screen overflow-hidden bg-[#050505] flex flex-col items-center justify-center text-center px-4 group"
+        className="relative w-full h-screen overflow-hidden bg-[#020204] flex flex-col items-center justify-center text-center px-4 group"
         onMouseMove={handleMouseMove}
     >
        
        {/* Background Effects */}
        
-       {/* Static Warm White Glow (Center) */}
-       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[radial-gradient(ellipse_at_center,rgba(255,245,235,0.08),transparent_70%)] blur-[80px] pointer-events-none z-0" />
+       {/* Static Warm White Glow (Center) - Rule 2: Blending Modes */}
+       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[radial-gradient(ellipse_at_center,rgba(255,245,235,0.1),transparent_70%)] blur-[80px] pointer-events-none z-0 mix-blend-screen" />
 
        {/* Mouse Revealed Grid Effect */}
        <motion.div
@@ -112,17 +112,17 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
             }}
             className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[0.95]"
             >
-             <motion.span variants={FADE_IN_VARIANTS} className="block text-gray-100">Webdesign Freelancer</motion.span>
+             <motion.span variants={FADE_IN_VARIANTS} className="block text-white/90">Webdesign Freelancer</motion.span>
              <motion.span variants={FADE_IN_VARIANTS} className="block text-transparent bg-clip-text bg-gradient-to-br from-orange-400 via-orange-200 to-white pb-2">& Website kaufen.</motion.span>
            </motion.h1>
 
-          {/* Description */}
+          {/* Description - Rule 4: White with opacity instead of gray */}
           <motion.p
             initial="hidden"
             animate="show"
             variants={FADE_IN_VARIANTS}
             transition={{ delay: 0.5 }}
-            className="mt-6 max-w-2xl text-lg text-gray-400 leading-relaxed"
+            className="mt-6 max-w-2xl text-lg text-white/60 leading-relaxed"
           >
             Professionelles Website Design günstig erstellen lassen. Ich verwandle komplexe Ideen in digitale Erlebnisse. Visuelle Exzellenz für Marken, die verkaufen wollen.
           </motion.p>

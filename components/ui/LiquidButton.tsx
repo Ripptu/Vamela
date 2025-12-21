@@ -22,19 +22,19 @@ export const LiquidButton: React.FC<LiquidButtonProps> = ({
   // Base Layout & Animation
   const baseStyles = "relative inline-flex items-center justify-center gap-2 px-8 py-4 font-bold text-sm md:text-base rounded-full transition-all duration-300 overflow-hidden group hover:scale-[1.03] active:scale-[0.98]";
 
-  // Aesthetic Variants
+  // Aesthetic Variants - Rule 5: Make interactive states obvious (Stronger shadows/glows on hover)
   const variants = {
-    // Standard High-Contrast (White) - Now with better shadow and text contrast
-    primary: "bg-white text-black border border-white shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.6)]",
+    // Standard High-Contrast (White)
+    primary: "bg-white text-black border border-white shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_35px_rgba(255,255,255,0.5)]",
     
-    // Brand Accent (Orange Gradient)
-    secondary: "bg-gradient-to-r from-orange-500 to-red-600 text-white border border-orange-500/50 shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:shadow-[0_0_50px_rgba(249,115,22,0.8)]",
+    // Brand Accent (Orange Gradient) - Desaturated orange border
+    secondary: "bg-gradient-to-r from-orange-500 to-red-600 text-white border border-orange-400/50 shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_50px_rgba(249,115,22,0.6)]",
     
     // WhatsApp Specific (Green Gradient)
-    whatsapp: "bg-[#25D366] text-black hover:text-white border border-[#25D366] shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_50px_rgba(37,211,102,0.8)]",
+    whatsapp: "bg-[#25D366] text-black hover:text-white border border-[#25D366] shadow-[0_0_20px_rgba(37,211,102,0.3)] hover:shadow-[0_0_50px_rgba(37,211,102,0.6)]",
 
     // Glass / Dark
-    glass: "bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20"
+    glass: "bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
   };
 
   // Adjust shimmer color for visibility on light vs dark backgrounds

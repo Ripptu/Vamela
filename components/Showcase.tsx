@@ -76,10 +76,10 @@ export const Showcase: React.FC = () => {
   }, [visibleCount]);
 
   return (
-    <section ref={containerRef} className="py-24 md:py-40 bg-[#050505] overflow-hidden min-h-screen flex items-center relative perspective-[2000px]">
+    <section ref={containerRef} className="py-24 md:py-40 bg-[#020204] overflow-hidden min-h-screen flex items-center relative perspective-[2000px]">
       
       {/* Background Ambience */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-green-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-green-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center w-full relative z-10">
         
@@ -91,25 +91,27 @@ export const Showcase: React.FC = () => {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
             >
-                <div className="text-orange-500 font-mono text-sm mb-4">● PROZESS & KOMMUNIKATION</div>
+                {/* Rule 3: Desaturate orange */}
+                <div className="text-orange-400 font-mono text-sm mb-4">● PROZESS & KOMMUNIKATION</div>
                 <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
                     Vom "Hallo" <br/>
                     zum <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-200">Launch.</span>
                 </h2>
-                <p className="text-xl text-gray-400 leading-relaxed mb-8">
+                {/* Rule 4: White opacity */}
+                <p className="text-xl text-white/60 leading-relaxed mb-8">
                     Kein Fachchinesisch. Keine Blackbox. <br />
                     Wir entwickeln deine Vision im direkten Austausch. Transparent, ehrlich und auf den Punkt.
                 </p>
                 
                 <div className="flex flex-col gap-4">
-                     <div className="flex items-center gap-3 text-gray-300">
-                        <div className="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
+                     <div className="flex items-center gap-3 text-white/80">
+                        <div className="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 shadow-[0_0_10px_rgba(34,197,94,0.1)]">
                             <Check className="w-5 h-5" />
                         </div>
                         <span>100% Persönlicher Ansprechpartner</span>
                      </div>
-                     <div className="flex items-center gap-3 text-gray-300">
-                        <div className="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
+                     <div className="flex items-center gap-3 text-white/80">
+                        <div className="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 shadow-[0_0_10px_rgba(34,197,94,0.1)]">
                             <Check className="w-5 h-5" />
                         </div>
                         <span>Schnelle Updates & direkte WhatsApp-Line</span>

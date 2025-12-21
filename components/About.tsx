@@ -22,9 +22,9 @@ const MinimalStat = ({ value, label, delay }: { value: number; label: string; de
                 <motion.span className="text-4xl md:text-5xl font-bold text-white tracking-tight">
                     {displayValue}
                 </motion.span>
-                <span className="text-xl text-orange-500 font-bold">+</span>
+                <span className="text-xl text-orange-400 font-bold">+</span>
             </div>
-            <span className="text-xs text-gray-500 uppercase tracking-widest font-medium border-t border-white/10 pt-2 block w-full max-w-[120px]">
+            <span className="text-xs text-white/40 uppercase tracking-widest font-medium border-t border-white/10 pt-2 block w-full max-w-[120px]">
                 {label}
             </span>
         </div>
@@ -33,7 +33,7 @@ const MinimalStat = ({ value, label, delay }: { value: number; label: string; de
 
 export const About: React.FC = () => {
   return (
-    <section id="about" className="py-16 md:py-20 px-6 relative overflow-hidden bg-[#0A0A0A] border-t border-white/5">
+    <section id="about" className="py-16 md:py-20 px-6 relative overflow-hidden bg-[#020204] border-t border-white/5">
       
       <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 md:gap-16 items-center relative z-10">
         
@@ -52,7 +52,7 @@ export const About: React.FC = () => {
             
             <div className="absolute bottom-6 left-6">
                 <p className="text-white font-bold text-lg">Christian Stockmeier</p>
-                <p className="text-orange-500 text-[10px] font-mono uppercase tracking-widest">Founder / Designer</p>
+                <p className="text-orange-400 text-[10px] font-mono uppercase tracking-widest">Founder / Designer</p>
             </div>
           </div>
         </div>
@@ -60,7 +60,7 @@ export const About: React.FC = () => {
         {/* Content Section */}
         <div className="space-y-8">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] text-orange-500 font-medium mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] text-orange-400 font-medium mb-4">
               <MousePointer2 className="w-3 h-3" /> BEHIND THE SCREENS
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-4">
@@ -71,7 +71,7 @@ export const About: React.FC = () => {
             </h2>
           </div>
 
-          <div className="space-y-4 text-gray-400 text-base leading-relaxed font-light">
+          <div className="space-y-4 text-white/60 text-base leading-relaxed font-light">
             <p>
               Hi, ich bin Christian. Angefangen hat alles nicht in einer schicken Agentur, sondern in meinem Kinderzimmer. Damals habe ich <strong>Minecraft-Banner für YouTuber</strong> gestaltet. Was als Spielerei begann, wurde zur Obsession für gutes Design.
             </p>
@@ -79,13 +79,14 @@ export const About: React.FC = () => {
               Ich bin kein Freund von "Business-Sprech" oder anonymen Abläufen. Ich bin dein direkter Ansprechpartner, der deine Vision versteht, weil ich diesen Weg selbst gegangen bin.
             </p>
             
-            <div className="bg-[#121214] border border-white/5 rounded-xl p-5 mt-4 relative overflow-hidden flex gap-4 items-start">
-                 <div className="shrink-0 p-2 bg-orange-500/10 rounded-lg text-orange-500">
+            {/* Rule 1: Use tinted dark gray for boxes */}
+            <div className="bg-white/[0.03] border border-white/5 rounded-xl p-5 mt-4 relative overflow-hidden flex gap-4 items-start shadow-xl">
+                 <div className="shrink-0 p-2 bg-orange-500/10 rounded-lg text-orange-400">
                     <MessageSquareHeart className="w-5 h-5" />
                  </div>
                  <div>
                     <h3 className="text-white font-bold text-xs uppercase tracking-wide mb-1">Mein Ansatz</h3>
-                    <p className="text-xs text-gray-500 leading-relaxed">
+                    <p className="text-xs text-white/50 leading-relaxed">
                     "Ich glaube daran, dass gutes Design Probleme löst. Es geht nicht um mein Ego als Künstler, sondern darum, dass du dich mit deinem Auftritt wohlfühlst und er für dein Business funktioniert."
                     </p>
                  </div>

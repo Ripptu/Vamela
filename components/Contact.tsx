@@ -12,9 +12,9 @@ export const Contact: React.FC<ContactProps> = ({ onOpenContact }) => {
       <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
             Bereit für den <br />
-            <span className="text-orange-500">nächsten Schritt?</span>
+            <span className="text-orange-400">nächsten Schritt?</span>
           </h2>
-          <p className="text-gray-400 leading-relaxed mb-10 text-base md:text-lg">
+          <p className="text-white/60 leading-relaxed mb-10 text-base md:text-lg">
             Genug gewartet. Lass uns deine Marke auf das Level heben, das sie verdient. Skalierbar, professionell und visuell beeindruckend. Schreib mir und wir besprechen deine Vision.
           </p>
 
