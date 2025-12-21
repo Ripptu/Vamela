@@ -99,10 +99,11 @@ export const BeforeAfter: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Interaction Area */}
+                {/* Interaction Area - TOUCH ACTION NONE IS CRITICAL HERE */}
                 <div 
                     ref={containerRef}
-                    className="absolute top-10 md:top-12 bottom-0 left-0 right-0 cursor-ew-resize overflow-hidden"
+                    className="absolute top-10 md:top-12 bottom-0 left-0 right-0 cursor-ew-resize overflow-hidden touch-none"
+                    style={{ touchAction: 'none' }}
                     onMouseDown={handleInteractionStart}
                     onMouseUp={handleInteractionEnd}
                     onTouchStart={handleInteractionStart}

@@ -11,7 +11,7 @@ const chatMessages = [
   { sender: 'me', text: "Perfekt. Arbeiten wir mit klaren Texten, viel Persönlichkeit und einem ruhigen, hochwertigen Design. Hast du schon Inhalte?", time: "10:42" },
   { sender: 'client', text: "Ein paar Texte gibt es, aber die dürfen gern überarbeitet werden. Designmäßig habe ich noch keine konkrete Vorstellung.", time: "10:45" },
   { sender: 'me', text: "Kein Problem 😊 Ich entwickle das Design Schritt für Schritt mit dir zusammen. Am Anfang stelle ich dir ein paar Fragen zu Stil und Zielgruppe.", time: "10:46" },
-  { sender: 'client', text: "Klingt gut. Wie läuft die Zusammenarbeit zeitlich ab?", time: "10:50" },
+  { sender: 'client', text: "Klingt gut. Wie läuft die Zusammenarbeit zeitlich ab?", time: "11:00" },
   { sender: 'me', text: "Nach unserem Startgespräch erstelle ich ein Konzept. Dann Design, Feedback, Feinschliff und Umsetzung. Du bist die ganze Zeit eingebunden.", time: "10:52" },
   { sender: 'client', text: "Das hört sich sehr entspannt an. Und preislich?", time: "10:55" },
   { sender: 'me', text: "Ich mache dir nach dem Gespräch ein klares Festpreis-Angebot. Ohne versteckte Kosten, versprochen.", time: "10:56" },
@@ -35,11 +35,12 @@ export const Showcase: React.FC = () => {
 
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 60, damping: 20 });
   
-  // Floating & Tilting Effect - refined for better visibility
-  const y = useTransform(smoothProgress, [0, 1], [80, 0]);
-  const rotateX = useTransform(smoothProgress, [0, 1], [20, 0]);
-  const rotateY = useTransform(smoothProgress, [0, 1], [-20, -5]);
-  const scale = useTransform(smoothProgress, [0, 1], [0.9, 1]);
+  // Floating & Tilting Effect - refined for mobile
+  // On mobile, we reduce the movement to prevent overflow issues
+  const y = useTransform(smoothProgress, [0, 1], [40, 0]);
+  const rotateX = useTransform(smoothProgress, [0, 1], [10, 0]);
+  const rotateY = useTransform(smoothProgress, [0, 1], [-5, -2]); 
+  const scale = useTransform(smoothProgress, [0, 1], [0.95, 1]);
   
   // Glare movement across screen
   const glarePos = useTransform(smoothProgress, [0, 1], ["0%", "120%"]);
@@ -55,7 +56,7 @@ export const Showcase: React.FC = () => {
           }
           return prev + 1;
         });
-      }, 5000); // 5 seconds interval
+      }, 5000);
       return () => clearInterval(interval);
     }
   }, [isInView, visibleCount]);
@@ -63,7 +64,6 @@ export const Showcase: React.FC = () => {
   // Auto-scroll chat to bottom
   useEffect(() => {
     if (scrollContainerRef.current) {
-        // Use a small timeout to ensure DOM has updated
         setTimeout(() => {
             if (scrollContainerRef.current) {
                 scrollContainerRef.current.scrollTo({
@@ -76,34 +76,32 @@ export const Showcase: React.FC = () => {
   }, [visibleCount]);
 
   return (
-    <section ref={containerRef} className="py-24 md:py-40 bg-[#020204] overflow-hidden min-h-screen flex items-center relative perspective-[2000px]">
+    <section ref={containerRef} className="py-20 md:py-40 bg-[#020204] overflow-hidden min-h-screen flex items-center relative perspective-[2000px]">
       
       {/* Background Ambience */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-green-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-green-500/5 rounded-full blur-[80px] md:blur-[120px] pointer-events-none mix-blend-screen" />
 
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center w-full relative z-10">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 grid lg:grid-cols-2 gap-12 md:gap-16 items-center w-full relative z-10">
         
         {/* Left: Text Content */}
-        <div className="order-2 lg:order-1">
+        <div className="order-2 lg:order-1 text-center lg:text-left">
             <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
             >
-                {/* Rule 3: Desaturate orange */}
-                <div className="text-orange-400 font-mono text-sm mb-4">● PROZESS & KOMMUNIKATION</div>
-                <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                <div className="text-orange-400 font-mono text-xs md:text-sm mb-4">● PROZESS & KOMMUNIKATION</div>
+                <h2 className="text-3xl md:text-6xl font-bold text-white mb-6 leading-tight">
                     Vom "Hallo" <br/>
                     zum <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-200">Launch.</span>
                 </h2>
-                {/* Rule 4: White opacity */}
-                <p className="text-xl text-white/60 leading-relaxed mb-8">
+                <p className="text-lg md:text-xl text-white/60 leading-relaxed mb-8">
                     Kein Fachchinesisch. Keine Blackbox. <br />
-                    Wir entwickeln deine Vision im direkten Austausch. Transparent, ehrlich und auf den Punkt.
+                    Wir entwickeln deine Vision im direkten Austausch.
                 </p>
                 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 items-center lg:items-start">
                      <div className="flex items-center gap-3 text-white/80">
                         <div className="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 shadow-[0_0_10px_rgba(34,197,94,0.1)]">
                             <Check className="w-5 h-5" />
@@ -121,11 +119,11 @@ export const Showcase: React.FC = () => {
         </div>
 
         {/* Right: iPhone 17 Pro */}
-        <div className="order-1 lg:order-2 flex justify-center relative z-10 py-10">
+        <div className="order-1 lg:order-2 flex justify-center relative z-10 py-6 md:py-10">
              
              <motion.div
                 style={{ y, rotateX, rotateY, scale }}
-                className="relative w-[340px] h-[700px] bg-[#1a1a1a] rounded-[60px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8),0_0_0_2px_rgba(255,255,255,0.05)] border-[6px] border-[#323232]"
+                className="relative w-[300px] h-[620px] md:w-[340px] md:h-[700px] bg-[#1a1a1a] rounded-[50px] md:rounded-[60px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8),0_0_0_2px_rgba(255,255,255,0.05)] border-[6px] border-[#323232]"
              >
                 {/* --- CHASSIS DETAILS --- */}
                 
@@ -138,7 +136,7 @@ export const Showcase: React.FC = () => {
                 <div className="absolute top-44 -right-[8px] w-[2px] h-20 bg-[#2a2a2a] rounded-r-md"></div>
 
                 {/* Inner Bezel (Black Border) */}
-                <div className="absolute inset-0 bg-black rounded-[54px] border-[8px] border-black overflow-hidden flex flex-col z-20">
+                <div className="absolute inset-0 bg-black rounded-[44px] md:rounded-[54px] border-[6px] md:border-[8px] border-black overflow-hidden flex flex-col z-20">
                     
                     {/* Glass Reflection/Glare */}
                     <motion.div 
@@ -150,15 +148,14 @@ export const Showcase: React.FC = () => {
                         className="absolute inset-0 w-[200%] h-full pointer-events-none z-[60] -ml-[50%]"
                     />
 
-                    {/* --- STATUS BAR & DYNAMIC ISLAND --- */}
-                    <div className="h-[50px] w-full bg-[#0b141a] relative z-50 flex justify-between items-center px-7 pt-2 select-none shrink-0">
-                        <span className="text-white text-[15px] font-semibold tracking-wide">9:41</span>
+                    {/* --- STATUS BAR --- */}
+                    <div className="h-[44px] w-full bg-[#0b141a] relative z-50 flex justify-between items-center px-6 pt-2 select-none shrink-0">
+                        <span className="text-white text-[14px] font-semibold tracking-wide">9:41</span>
                         
                         {/* Dynamic Island */}
-                        <div className="absolute top-[10px] left-1/2 -translate-x-1/2 h-[34px] w-[120px] bg-black rounded-full z-50 flex items-center justify-center">
-                             {/* FaceID Sensor dots (very subtle) */}
+                        <div className="absolute top-[8px] left-1/2 -translate-x-1/2 h-[30px] w-[100px] bg-black rounded-full z-50 flex items-center justify-center">
                              <div className="flex gap-2 opacity-30">
-                                <div className="w-2 h-2 rounded-full bg-[#1a1a1a]"></div>
+                                <div className="w-1.5 h-1.5 rounded-full bg-[#1a1a1a]"></div>
                              </div>
                         </div>
 
@@ -168,39 +165,35 @@ export const Showcase: React.FC = () => {
                                 <div className="w-3 h-[2px] bg-white rounded-full"></div>
                                 <div className="w-2 h-[2px] bg-white rounded-full"></div>
                              </div>
-                             <div className="w-[20px] h-[10px] border border-gray-400 rounded-[3px] relative ml-1">
+                             <div className="w-[18px] h-[9px] border border-gray-400 rounded-[3px] relative ml-1">
                                 <div className="bg-white absolute inset-[1.5px] rounded-[1px] w-[60%]"></div>
                              </div>
                         </div>
                     </div>
 
-                    {/* --- WHATSAPP APP BAR (FIXED LAYOUT) --- */}
+                    {/* --- WHATSAPP APP BAR --- */}
                     <div className="bg-[#1f2c34] h-[60px] flex items-center px-2 z-40 relative shrink-0 border-b border-[#2a3942]/50">
-                         {/* Back Button Group */}
-                         <div className="flex items-center text-[#53bdeb] pl-1 cursor-pointer">
-                             <ChevronLeft className="w-7 h-7" />
-                             <span className="text-[17px] leading-none -ml-1 pt-[1px]">42</span>
+                         <div className="flex items-center text-[#53bdeb] pl-1">
+                             <ChevronLeft className="w-6 h-6" />
+                             <span className="text-[16px] leading-none -ml-1 pt-[1px]">42</span>
                          </div>
                          
-                         {/* Profile Pic (Flex Item) */}
-                         <div className="ml-1 mr-2 w-[34px] h-[34px] rounded-full overflow-hidden border border-white/5 bg-gray-700 shrink-0 relative">
+                         <div className="ml-1 mr-2 w-[34px] h-[34px] rounded-full overflow-hidden border border-white/5 bg-gray-700 shrink-0">
                              <img 
                                 src="https://i.ibb.co/23LgZg8X/christian-jpg.png" 
-                                alt="Profile" 
+                                alt="Christian Stockmeier" 
                                 className="w-full h-full object-cover" 
                              />
                          </div>
                          
-                         {/* Name & Status */}
-                         <div className="flex-1 flex flex-col justify-center overflow-hidden cursor-pointer min-w-0 pr-2">
-                             <span className="text-white font-semibold text-[16px] leading-tight truncate">Christian Stockmeier</span>
-                             <span className="text-[#889a9e] text-[10px] truncate leading-tight">zuletzt online heute um 09:30</span>
+                         <div className="flex-1 flex flex-col justify-center overflow-hidden min-w-0 pr-2">
+                             <span className="text-white font-semibold text-[15px] leading-tight truncate">Christian Stockmeier</span>
+                             <span className="text-[#889a9e] text-[10px] truncate leading-tight">zuletzt online heute</span>
                          </div>
                          
-                         {/* Icons */}
-                         <div className="flex items-center gap-5 text-[#53bdeb] pr-3 shrink-0">
-                             <Video className="w-6 h-6 stroke-[1.5]" />
-                             <Phone className="w-[22px] h-[22px] stroke-[1.5]" />
+                         <div className="flex items-center gap-4 text-[#53bdeb] pr-2 shrink-0">
+                             <Video className="w-5 h-5 stroke-[1.5]" />
+                             <Phone className="w-5 h-5 stroke-[1.5]" />
                          </div>
                     </div>
 
@@ -208,21 +201,19 @@ export const Showcase: React.FC = () => {
                     <div 
                         className="flex-1 bg-[#0b141a] relative overflow-hidden flex flex-col"
                     >
-                         {/* Wallpaper Pattern (Official Style) */}
                          <div className="absolute inset-0 opacity-[0.06] bg-[url('https://i.pinimg.com/originals/97/c0/07/97c00759d90d786d9b6096d274ad3e07.png')] bg-repeat bg-[length:350px]"></div>
                          
-                         {/* Scrollable Messages */}
                          <div 
                             ref={scrollContainerRef}
-                            className="flex-1 overflow-y-auto px-4 py-4 space-y-3 no-scrollbar relative z-10"
+                            className="flex-1 overflow-y-auto px-3 py-4 space-y-3 no-scrollbar relative z-10"
                          >
                             <div className="flex justify-center mb-6 sticky top-0 z-20">
-                                <span className="bg-[#1f2c34]/90 backdrop-blur-sm text-[#8696a0] text-[11px] font-medium px-3 py-1 rounded-lg shadow-sm border border-white/5">Heute</span>
+                                <span className="bg-[#1f2c34]/90 backdrop-blur-sm text-[#8696a0] text-[10px] font-medium px-2 py-1 rounded-lg shadow-sm border border-white/5">Heute</span>
                             </div>
 
-                            <div className="bg-[#1f2c34] p-3 rounded-lg mb-6 text-center mx-auto max-w-[90%] border border-[#2a3942] shadow-sm">
-                                <p className="text-[10px] text-[#ffd279] leading-tight">
-                                    Nachrichten an dieses Unternehmen sind geschützt. VAMELA speichert keine Chats auf Servern.
+                            <div className="bg-[#1f2c34] p-2 rounded-lg mb-6 text-center mx-auto max-w-[90%] border border-[#2a3942] shadow-sm">
+                                <p className="text-[9px] text-[#ffd279] leading-tight">
+                                    VAMELA: Nachrichten sind Ende-zu-Ende verschlüsselt.
                                 </p>
                             </div>
 
@@ -237,26 +228,25 @@ export const Showcase: React.FC = () => {
                                         className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'} mb-1`}
                                     >
                                         <div 
-                                            className={`relative max-w-[85%] px-3 py-1.5 text-[15px] leading-snug shadow-[0_1px_0.5px_rgba(0,0,0,0.13)] group ${
+                                            className={`relative max-w-[85%] px-3 py-1.5 text-[14px] leading-snug shadow-[0_1px_0.5px_rgba(0,0,0,0.13)] group ${
                                                 msg.sender === 'me' 
                                                 ? 'bg-[#005c4b] text-[#e9edef] rounded-lg rounded-tr-none' 
                                                 : 'bg-[#202c33] text-[#e9edef] rounded-lg rounded-tl-none'
                                             }`}
                                         >
-                                            {/* SVG Tails */}
                                             {msg.sender === 'me' ? (
                                                 <svg viewBox="0 0 8 13" height="13" width="8" className="absolute top-0 -right-[8px] fill-[#005c4b]"><path d="M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z"></path></svg>
                                             ) : (
                                                 <svg viewBox="0 0 8 13" height="13" width="8" className="absolute top-0 -left-[8px] fill-[#202c33] scale-x-[-1]"><path d="M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z"></path></svg>
                                             )}
 
-                                            <span className="block mb-1 text-[15px]">{msg.text}</span>
+                                            <span className="block mb-1">{msg.text}</span>
                                             <div className="flex justify-end items-center gap-1 opacity-60 min-w-[50px]">
-                                                <span className="text-[10px] tracking-wide">{msg.time}</span>
+                                                <span className="text-[9px] tracking-wide">{msg.time}</span>
                                                 {msg.sender === 'me' && (
                                                     <div className="flex -space-x-1.5">
-                                                        <Check className="w-3.5 h-3.5 text-[#53bdeb]" />
-                                                        <Check className="w-3.5 h-3.5 text-[#53bdeb] -ml-2" />
+                                                        <Check className="w-3 h-3 text-[#53bdeb]" />
+                                                        <Check className="w-3 h-3 text-[#53bdeb] -ml-2" />
                                                     </div>
                                                 )}
                                             </div>
@@ -269,16 +259,14 @@ export const Showcase: React.FC = () => {
                     </div>
 
                     {/* --- INPUT BAR --- */}
-                    <div className="bg-[#1f2c34] flex items-end pt-2 px-2 gap-2 z-40 pb-[30px] border-t border-[#2a3942]/50 shrink-0">
+                    <div className="bg-[#1f2c34] flex items-end pt-2 px-2 gap-2 z-40 pb-[25px] border-t border-[#2a3942]/50 shrink-0">
                          <div className="mb-2 p-1">
                              <Plus className="w-6 h-6 text-[#8696a0]" />
                          </div>
                          
                          <div className="flex-1 bg-[#2a3942] min-h-[34px] rounded-2xl px-3 py-1.5 flex items-center justify-between mb-2">
                              <div className="w-[2px] h-4 bg-[#00a884] animate-pulse"></div>
-                             <div className="flex gap-3">
-                                <div className="w-5 h-5 rounded border border-[#8696a0] opacity-50"></div>
-                             </div>
+                             <div className="flex gap-3"></div>
                          </div>
                          
                          <div className="flex gap-3 pr-1 mb-2">
@@ -290,7 +278,7 @@ export const Showcase: React.FC = () => {
                     </div>
 
                     {/* Home Indicator */}
-                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[130px] h-[5px] bg-white rounded-full z-[60] opacity-60"></div>
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[120px] h-[4px] bg-white rounded-full z-[60] opacity-60"></div>
 
                 </div>
              </motion.div>

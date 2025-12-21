@@ -32,60 +32,6 @@ function App() {
     return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
-  // PERFORMANCE OPTIMIZATION: Scroll Progress Favicon Logic
-  // Disabled on mobile devices to prevent scroll jank
-  useEffect(() => {
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    if (isMobile) return;
-
-    const canvas = document.createElement('canvas');
-    canvas.width = 32;
-    canvas.height = 32;
-    const ctx = canvas.getContext('2d');
-    const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
-    if (!ctx || !link) return;
-
-    let ticking = false;
-
-    const updateFavicon = () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.body.offsetHeight;
-        const winHeight = window.innerHeight;
-        const scrollPercent = scrollTop / (docHeight - winHeight);
-        
-        ctx.clearRect(0, 0, 32, 32);
-        
-        // Background Circle
-        ctx.beginPath();
-        ctx.arc(16, 16, 14, 0, 2 * Math.PI);
-        ctx.fillStyle = '#020204';
-        ctx.fill();
-        ctx.strokeStyle = '#333';
-        ctx.lineWidth = 4;
-        ctx.stroke();
-
-        // Progress Arc (Orange)
-        ctx.beginPath();
-        ctx.arc(16, 16, 14, -0.5 * Math.PI, (2 * Math.PI * scrollPercent) - 0.5 * Math.PI);
-        ctx.strokeStyle = '#f97316';
-        ctx.lineWidth = 4;
-        ctx.stroke();
-
-        link.href = canvas.toDataURL('image/png');
-        ticking = false;
-    };
-
-    const onScroll = () => {
-        if (!ticking) {
-            window.requestAnimationFrame(updateFavicon);
-            ticking = true;
-        }
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
   // PERFORMANCE OPTIMIZATION: Smooth Scroll (Lenis)
   // Disable on mobile to use native, performant scrolling
   useEffect(() => {

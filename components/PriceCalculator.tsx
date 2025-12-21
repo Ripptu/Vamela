@@ -35,14 +35,25 @@ export const PriceCalculator: React.FC = () => {
   };
 
   const getWhatsAppLink = () => {
-      // ... same logic
       const designNames = {
           'standard': 'Clean & Basic',
           'premium': 'Custom Brand',
           'high-end': 'High-End'
       };
-      // ... truncated logic for brevity
-      return `https://wa.me/4917624200179`;
+      
+      const featureList = Object.entries(features)
+        .filter(([_, active]) => active)
+        .map(([key]) => key.toUpperCase())
+        .join(', ');
+
+      const text = `Hi Christian, ich habe den Kalkulator genutzt:%0A%0A` +
+                   `📄 Seiten: ${pages}%0A` +
+                   `🎨 Design: ${designNames[designLevel]}%0A` +
+                   `✨ Extras: ${featureList || 'Keine'}%0A%0A` +
+                   `💰 Schätzung: ca. ${total}€%0A%0A` +
+                   `Lass uns mal sprechen!`;
+                   
+      return `https://wa.me/4917624200179?text=${text}`;
   };
 
   const getPriceStyle = () => {
@@ -56,14 +67,14 @@ export const PriceCalculator: React.FC = () => {
   };
 
   return (
-    <section className="py-24 px-6 bg-[#030005] border-y border-white/5 relative overflow-hidden">
+    <section className="py-16 md:py-24 px-4 md:px-6 bg-[#030005] border-y border-white/5 relative overflow-hidden">
         
         {/* Background blobs */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+        <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-purple-500/10 rounded-full blur-[80px] pointer-events-none mix-blend-screen" />
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-orange-500/10 rounded-full blur-[80px] pointer-events-none mix-blend-screen" />
 
         <div className="max-w-6xl mx-auto relative z-10">
-            <div className="text-center mb-12">
+            <div className="text-center mb-10 md:mb-12">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-xs text-purple-400 font-medium mb-4">
                     <Calculator className="w-3 h-3" /> WEBSITE KOSTEN RECHNER
                 </div>
@@ -73,28 +84,30 @@ export const PriceCalculator: React.FC = () => {
                         günstige Website?
                     </span>
                 </h2>
-                <p className="text-white/60 max-w-2xl mx-auto">
+                <p className="text-white/60 max-w-2xl mx-auto text-sm md:text-base">
                     Transparenz von Anfang an. Du möchtest eine Website billig erstellen lassen, aber nicht an Qualität sparen? Kalkuliere hier deinen fairen Festpreis.
                 </p>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-8 md:gap-12">
+            <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 md:gap-12">
                 
                 {/* Controls Area */}
-                <div className="lg:col-span-2 space-y-10">
+                <div className="lg:col-span-2 space-y-6 md:space-y-10 order-1 lg:order-1">
                     
                     {/* 1. Pages Slider */}
-                    <div className="bg-white/[0.02] p-6 rounded-2xl border border-white/5 shadow-xl">
+                    <div className="bg-white/[0.02] p-5 md:p-6 rounded-2xl border border-white/5 shadow-xl">
                         <div className="flex justify-between mb-6">
                             <label className="text-white font-bold">Anzahl Unterseiten</label>
                             <span className="text-orange-400 font-mono">{pages} Seiten</span>
                         </div>
                         
-                        <div className="relative h-2 w-full bg-white/10 rounded-lg">
-                            <div 
-                                className="absolute h-full bg-orange-500 rounded-lg" 
-                                style={{ width: `${(pages / 20) * 100}%` }} 
-                            />
+                        <div className="relative h-6 w-full flex items-center group">
+                            <div className="absolute w-full h-2 bg-white/10 rounded-lg">
+                                <div 
+                                    className="h-full bg-orange-500 rounded-lg transition-all" 
+                                    style={{ width: `${(pages / 20) * 100}%` }} 
+                                />
+                            </div>
                             <input 
                                 type="range" 
                                 min="1" 
@@ -102,6 +115,12 @@ export const PriceCalculator: React.FC = () => {
                                 value={pages} 
                                 onChange={(e) => setPages(parseInt(e.target.value))}
                                 className="absolute w-full h-full opacity-0 cursor-pointer z-10"
+                                aria-label="Anzahl der Seiten"
+                            />
+                            {/* Thumb Visual */}
+                            <div 
+                                className="absolute w-6 h-6 bg-white rounded-full shadow-md pointer-events-none transition-all group-active:scale-125"
+                                style={{ left: `calc(${(pages / 20) * 100}% - 12px)` }}
                             />
                         </div>
 
@@ -112,9 +131,9 @@ export const PriceCalculator: React.FC = () => {
                     </div>
 
                     {/* 2. Design Level */}
-                    <div className="bg-white/[0.02] p-6 rounded-2xl border border-white/5 shadow-xl">
-                        <label className="text-white font-bold block mb-6">Design Anspruch</label>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-white/[0.02] p-5 md:p-6 rounded-2xl border border-white/5 shadow-xl">
+                        <label className="text-white font-bold block mb-4 md:mb-6">Design Anspruch</label>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
                             {[
                                 { id: 'standard', label: 'Clean & Preiswert', desc: 'Funktional, basierend auf Best Practices. Perfekt für den Start.' },
                                 { id: 'premium', label: 'Custom Brand', desc: 'Individuelle Icons, Animationen, starke Identität.' },
@@ -123,7 +142,7 @@ export const PriceCalculator: React.FC = () => {
                                 <button
                                     key={level.id}
                                     onClick={() => setDesignLevel(level.id as any)}
-                                    className={`text-left p-4 rounded-xl border transition-all duration-300 ${
+                                    className={`text-left p-4 rounded-xl border transition-all duration-300 active:scale-[0.98] ${
                                         designLevel === level.id 
                                         ? 'bg-white/5 border-orange-400' 
                                         : 'bg-transparent border-white/10 hover:border-white/30'
@@ -139,9 +158,9 @@ export const PriceCalculator: React.FC = () => {
                     </div>
 
                     {/* 3. Features */}
-                    <div className="bg-white/[0.02] p-6 rounded-2xl border border-white/5 shadow-xl">
-                        <label className="text-white font-bold block mb-6">Features & Add-ons</label>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="bg-white/[0.02] p-5 md:p-6 rounded-2xl border border-white/5 shadow-xl">
+                        <label className="text-white font-bold block mb-4 md:mb-6">Features & Add-ons</label>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                             {[
                                 { key: 'seo', label: 'SEO Basis-Setup', price: '+120€' },
                                 { key: 'cms', label: 'CMS (Selbst bearbeitbar)', price: '+200€' },
@@ -151,19 +170,19 @@ export const PriceCalculator: React.FC = () => {
                                 <button
                                     key={feat.key}
                                     onClick={() => toggleFeature(feat.key as any)}
-                                    className={`flex items-center justify-between p-4 rounded-xl border transition-all ${
+                                    className={`flex items-center justify-between p-4 rounded-xl border transition-all active:scale-[0.98] ${
                                         features[feat.key as keyof typeof features]
                                         ? 'bg-green-500/10 border-green-500/50'
                                         : 'bg-transparent border-white/10 hover:border-white/30'
                                     }`}
                                 >
                                     <div className="flex items-center gap-3">
-                                        <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
+                                        <div className={`w-6 h-6 rounded-full border flex items-center justify-center transition-colors ${
                                             features[feat.key as keyof typeof features] 
                                             ? 'bg-green-500 border-green-500' 
                                             : 'border-white/30'
                                         }`}>
-                                            {features[feat.key as keyof typeof features] && <Check className="w-3 h-3 text-black" />}
+                                            {features[feat.key as keyof typeof features] && <Check className="w-4 h-4 text-black" />}
                                         </div>
                                         <span className="text-sm font-medium text-gray-200">{feat.label}</span>
                                     </div>
@@ -176,8 +195,8 @@ export const PriceCalculator: React.FC = () => {
                 </div>
 
                 {/* Total Price Card (Sticky) */}
-                <div className="lg:col-span-1">
-                    <div className="sticky top-10 bg-[#0A0A0C] border border-white/10 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+                <div className="lg:col-span-1 order-2 lg:order-2 mb-8 lg:mb-0">
+                    <div className="sticky top-4 md:top-10 bg-[#0A0A0C] border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-[50px] pointer-events-none mix-blend-screen"></div>
                         
                         <div className="text-sm text-white/40 font-mono uppercase tracking-widest mb-2">Geschätztes Invest</div>
@@ -188,7 +207,7 @@ export const PriceCalculator: React.FC = () => {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
-                                    className={`text-5xl font-bold tracking-tight transition-all duration-500 ${getPriceStyle()}`}
+                                    className={`text-4xl md:text-5xl font-bold tracking-tight transition-all duration-500 ${getPriceStyle()}`}
                                 >
                                     {total.toLocaleString('de-DE')}€
                                 </motion.span>
@@ -215,12 +234,12 @@ export const PriceCalculator: React.FC = () => {
                             href={getWhatsAppLink()}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full flex items-center justify-center gap-2 bg-white hover:bg-gray-200 text-black font-bold py-4 rounded-xl transition-all hover:scale-[1.02] shadow-lg"
+                            className="w-full flex items-center justify-center gap-2 bg-white hover:bg-gray-200 text-black font-bold py-4 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg"
                         >
                             <Zap className="w-4 h-4 fill-current" /> Angebot anfordern
                         </a>
                         <p className="text-[10px] text-white/40 text-center mt-4">
-                            *Dies ist eine unverbindliche Schätzung. Günstig und fair.
+                            *Dies ist eine unverbindliche Schätzung.
                         </p>
                     </div>
                 </div>

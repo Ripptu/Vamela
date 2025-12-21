@@ -176,7 +176,8 @@ export const LogoReveal: React.FC = () => {
         <div className="flex-1 order-1 md:order-2 flex justify-center w-full">
             <div 
                 ref={containerRef}
-                className="relative w-full max-w-[400px] aspect-square rounded-3xl overflow-hidden border border-white/10 shadow-2xl group cursor-none"
+                className="relative w-full max-w-[400px] aspect-square rounded-3xl overflow-hidden border border-white/10 shadow-2xl group cursor-none touch-none"
+                style={{ touchAction: 'none' }}
             >
                 {/* BACK LAYER (The New Brand) */}
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-purple-600 flex items-center justify-center p-8">
@@ -201,11 +202,12 @@ export const LogoReveal: React.FC = () => {
                     onMouseMove={(e: any) => draw(e)}
                     onTouchMove={(e: any) => draw(e)}
                     className="absolute inset-0 w-full h-full z-10 touch-none"
+                    style={{ touchAction: 'none' }}
                 />
 
-                {/* Custom Cursor for this area */}
+                {/* Custom Cursor for this area - Hidden on mobile via touch check usually, but styling here ensures desktop only mostly */}
                 <motion.div 
-                    className="absolute pointer-events-none w-10 h-10 rounded-full border-2 border-white bg-white/20 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute pointer-events-none w-10 h-10 rounded-full border-2 border-white bg-white/20 backdrop-blur-sm z-50 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hidden md:flex"
                     style={{ 
                         left: -20, // Center offset
                         top: -20,  // Center offset
@@ -216,7 +218,7 @@ export const LogoReveal: React.FC = () => {
                 
                 {/* Instruction Overlay (fades out on interaction) */}
                 {progress < 5 && (
-                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none text-white/50 text-xs uppercase tracking-widest animate-pulse">
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none text-white/50 text-xs uppercase tracking-widest animate-pulse w-full text-center">
                         Rubbeln zum Freilegen
                     </div>
                 )}
