@@ -98,7 +98,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
             />
           </motion.div>
 
-          {/* Title */}
+          {/* Title - UPDATED TO PLAYFAIR DISPLAY SERIF WITH PREMIUM STYLING */}
            <motion.h1
             initial="hidden"
             animate="show"
@@ -110,10 +110,31 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
                     },
                 },
             }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[0.95]"
+            className="font-serif text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[1.1]"
             >
-             <motion.span variants={FADE_IN_VARIANTS} className="block text-white/90">Webdesign Freelancer</motion.span>
-             <motion.span variants={FADE_IN_VARIANTS} className="block text-transparent bg-clip-text bg-gradient-to-br from-orange-400 via-orange-200 to-white pb-2">& Website kaufen.</motion.span>
+             {/* LINE 1: Colored Gradient (Liquid Gold/Orange) & Upright */}
+             <motion.span 
+                variants={FADE_IN_VARIANTS} 
+                className="block font-medium text-transparent bg-clip-text bg-gradient-to-r from-orange-300 via-orange-100 to-orange-400 bg-[length:200%_auto] animate-shimmer pb-1 drop-shadow-[0_0_10px_rgba(251,146,60,0.2)]"
+             >
+                Webdesign Freelancer
+             </motion.span>
+             
+             {/* LINE 2: Mixed Styles */}
+             <motion.span 
+                variants={FADE_IN_VARIANTS} 
+                className="block text-white"
+             >
+                {/* Ampersand: Italic (Fancy), White, Connecting */}
+                <span className="italic font-light text-white mr-2 md:mr-4">
+                    &
+                </span>
+                
+                {/* Text: Italic & White */}
+                <span className="italic font-light text-white/90">
+                    Website kaufen.
+                </span>
+             </motion.span>
            </motion.h1>
 
           {/* Description - Rule 4: White with opacity instead of gray */}
@@ -122,7 +143,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
             animate="show"
             variants={FADE_IN_VARIANTS}
             transition={{ delay: 0.5 }}
-            className="mt-6 max-w-2xl text-lg text-white/60 leading-relaxed"
+            className="mt-6 max-w-2xl text-lg text-white/60 leading-relaxed font-sans"
           >
             Professionelles Website Design günstig erstellen lassen. Ich verwandle komplexe Ideen in digitale Erlebnisse. Visuelle Exzellenz für Marken, die verkaufen wollen.
           </motion.p>
@@ -133,7 +154,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
             animate="show"
             variants={FADE_IN_VARIANTS}
             transition={{ delay: 0.7 }}
-            className="mt-10 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+            className="mt-10 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto font-sans"
           >
             <LiquidButton 
                 onClick={onOpenContact}
