@@ -9,9 +9,9 @@ const RollingDigit: React.FC<{ digit: string; delay: number }> = ({ digit, delay
   const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   const target = parseInt(digit);
   
-  // Calculate how far to scroll (e.g. if target is 2, we might scroll 2 full loops + 2)
-  // We add '20' to ensure it spins at least twice for visual effect
-  const finalY = -(target * 100); 
+  // Calculate how far to scroll (e.g. if target is 2, we need to shift 20% of the total height)
+  // Since there are 10 numbers, each number is 10% of the height.
+  const finalY = -(target * 10); 
 
   return (
     <div className="h-[1em] overflow-hidden relative inline-block mx-[1px]">
@@ -148,7 +148,7 @@ export const About: React.FC = () => {
              />
              <RollingStats 
                 value={3} 
-                label="Jahre Dev" 
+                label="Jahre Webdesign" 
                 icon={Code}
                 delay={0.2}
              />

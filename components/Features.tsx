@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { PenTool, Code2, ExternalLink, Cpu, MoveLeft, MoveRight, Laptop, Layout, Building2, Printer, CreditCard, Utensils, Palette } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -196,6 +196,25 @@ const WebProjectsVisual = () => {
 
 const GraphicReferencesVisual = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const [dragConstraint, setDragConstraint] = useState(0);
+
+    // Calculate dynamic drag constraints based on content width vs container width
+    useEffect(() => {
+        const updateConstraints = () => {
+            if (containerRef.current && contentRef.current) {
+                const containerWidth = containerRef.current.clientWidth;
+                const contentWidth = contentRef.current.scrollWidth;
+                // If content is larger than container, we can drag left up to the difference
+                const maxDrag = Math.max(0, contentWidth - containerWidth + 40); // +40 for padding/safe area
+                setDragConstraint(-maxDrag);
+            }
+        };
+
+        updateConstraints();
+        window.addEventListener('resize', updateConstraints);
+        return () => window.removeEventListener('resize', updateConstraints);
+    }, []);
 
     return (
         <div className="w-full h-full bg-[#0A0A0C] rounded-xl border border-white/10 relative overflow-hidden flex flex-col shadow-2xl min-h-[300px]">
@@ -215,8 +234,9 @@ const GraphicReferencesVisual = () => {
              {/* Carousel */}
              <div className="flex-1 relative overflow-hidden flex items-center" ref={containerRef}>
                 <motion.div 
+                    ref={contentRef}
                     drag="x"
-                    dragConstraints={{ left: -3000, right: 0 }} 
+                    dragConstraints={{ left: dragConstraint, right: 0 }} 
                     whileTap={{ cursor: "grabbing" }}
                     className="flex gap-4 md:gap-6 px-4 md:px-8 cursor-grab active:cursor-grabbing items-center"
                 >
