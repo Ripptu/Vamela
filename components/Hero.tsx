@@ -3,20 +3,16 @@ import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-mot
 import { Mail, MessageCircle, Play } from 'lucide-react';
 import { LiquidButton } from './ui/LiquidButton';
 
-// Images for the Marquee
+// Images for the Marquee - STRICTLY VAMELA ASSETS
 const HERO_IMAGES = [
-  "https://mir-s3-cdn-cf.behance.net/project_modules/hd/f8e7b5105213155.5f742224dbf68.jpg",
-  "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/309826105213155.5f742224de498.jpg",
-  "https://i.ytimg.com/vi/RPgOaElGsGc/maxresdefault.jpg",
-  "https://cdn.dribbble.com/userupload/41573963/file/original-ac839f228c8ebe7139e7a9cfcae7d3fa.png?resize=400x0",
-  "https://marketplace.canva.com/EAFLXoWGglA/2/0/1600w/canva-beige-and-black-trendy-minimalist-new-abstract-store-logo-u5oX0PaKeUM.jpg",
-  "https://cdn.dribbble.com/userupload/43854809/file/original-2983c03c67efe234428ea8a83df572a2.png?resize=400x0",
-  "https://i0.wp.com/graphicdesignjunction.com/wp-content/uploads/2024/08/mountain_%26_dog_logo.jpg?resize=890%2C668&ssl=1",
-  "https://www.logoai.com/uploads/output/2025/06/20/1aaf5e339a9a9bb5c0a92b728316e901.jpg",
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBhMSVfRmiE-2ghs82gymc4luLqKdEWYk6jQ&s",
-  "https://cdn.dribbble.com/userupload/45066279/file/d44190eb7835505a9882ef81e92530c0.png?resize=400x0",
-  "https://www.inkyy.com/wp-content/uploads/2018/12/suitcase.png",
-  "https://i.postimg.cc/mDKysVKh/ssss.png"
+  "https://i.postimg.cc/MKfgVYQk/html.png",
+  "https://i.postimg.cc/mDKysVKh/ssss.png",
+  "https://i.postimg.cc/MKfgVYQk/html.png",
+  "https://i.postimg.cc/mDKysVKh/ssss.png",
+  "https://i.postimg.cc/MKfgVYQk/html.png",
+  "https://i.postimg.cc/mDKysVKh/ssss.png",
+  "https://i.postimg.cc/MKfgVYQk/html.png",
+  "https://i.postimg.cc/mDKysVKh/ssss.png",
 ];
 
 interface HeroProps {
@@ -46,7 +42,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
   };
 
   const maskImage = useMotionTemplate`radial-gradient(350px circle at ${mouseXSpring}px ${mouseYSpring}px, black, transparent)`;
-  const duplicatedImages = [...HERO_IMAGES, ...HERO_IMAGES];
+  const duplicatedImages = [...HERO_IMAGES, ...HERO_IMAGES, ...HERO_IMAGES]; // Tripled for smoother loop
 
   return (
     <header 
@@ -173,14 +169,14 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact }) => {
              {duplicatedImages.map((src, index) => (
             <div
               key={index}
-              className="relative aspect-[4/3] h-24 md:h-44 flex-shrink-0 grayscale-[50%] opacity-60 transition-all duration-500 pointer-events-auto"
+              className="relative aspect-[4/3] h-24 md:h-44 flex-shrink-0 opacity-40 transition-all duration-500 pointer-events-auto bg-white/5 border border-white/5 rounded-xl p-4 md:p-8"
               style={{ rotate: `${index % 2 === 0 ? -2 : 2}deg` }}
             >
               <img
                 src={src}
-                alt={`Referenz Design ${index + 1}`}
+                alt={`VAMELA Brand Asset ${index + 1}`}
                 loading="lazy"
-                className="w-full h-full object-cover rounded-xl border border-white/10 shadow-lg"
+                className="w-full h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-500"
               />
             </div>
           ))}

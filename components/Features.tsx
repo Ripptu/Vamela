@@ -61,19 +61,14 @@ const graphicServices: ServiceDetail[] = [
   }
 ];
 
+// ONLY VAMELA ASSETS
 const REFERENCE_LOGOS = [
-  "https://mir-s3-cdn-cf.behance.net/project_modules/hd/f8e7b5105213155.5f742224dbf68.jpg",
-  "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/309826105213155.5f742224de498.jpg",
-  "https://i.ytimg.com/vi/RPgOaElGsGc/maxresdefault.jpg",
-  "https://cdn.dribbble.com/userupload/41573963/file/original-ac839f228c8ebe7139e7a9cfcae7d3fa.png?resize=400x0",
-  "https://marketplace.canva.com/EAFLXoWGglA/2/0/1600w/canva-beige-and-black-trendy-minimalist-new-abstract-store-logo-u5oX0PaKeUM.jpg",
-  "https://cdn.dribbble.com/userupload/43854809/file/original-2983c03c67efe234428ea8a83df572a2.png?resize=400x0",
-  "https://i0.wp.com/graphicdesignjunction.com/wp-content/uploads/2024/08/mountain_%26_dog_logo.jpg?resize=890%2C668&ssl=1",
-  "https://www.logoai.com/uploads/output/2025/06/20/1aaf5e339a9a9bb5c0a92b728316e901.jpg",
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBhMSVfRmiE-2ghs82gymc4luLqKdEWYk6jQ&s",
-  "https://cdn.dribbble.com/userupload/45066279/file/d44190eb7835505a9882ef81e92530c0.png?resize=400x0",
-  "https://www.inkyy.com/wp-content/uploads/2018/12/suitcase.png",
-  "https://i.postimg.cc/mDKysVKh/ssss.png"
+  "https://i.postimg.cc/MKfgVYQk/html.png",
+  "https://i.postimg.cc/mDKysVKh/ssss.png",
+  "https://i.postimg.cc/MKfgVYQk/html.png",
+  "https://i.postimg.cc/mDKysVKh/ssss.png",
+  "https://i.postimg.cc/MKfgVYQk/html.png",
+  "https://i.postimg.cc/mDKysVKh/ssss.png",
 ];
 
 // --- Components ---
@@ -110,6 +105,8 @@ const WebProjectsVisual = () => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     const projects = [
+        { title: "Push MMA", url: "https://pushmma.netlify.app", displayUrl: "pushmma.app", category: "Sport" },
+        { title: "Kleeb", url: "https://kleeb.netlify.app", displayUrl: "kleeb.app", category: "Business" },
         { title: "Thomas Rott", url: "https://thomasrott.de", displayUrl: "thomasrott.de", category: "Portfolio" },
         { title: "Barber", url: "https://barbermoosburg.netlify.app", displayUrl: "barbermoosburg.app", category: "Business" },
         { title: "Coremis", url: "https://coremis2.netlify.app", displayUrl: "coremis2.app", category: "Corporate" }
@@ -243,15 +240,15 @@ const GraphicReferencesVisual = () => {
                     {REFERENCE_LOGOS.map((src, idx) => (
                         <motion.div
                             key={idx}
-                            className="relative min-w-[160px] md:min-w-[200px] h-[160px] md:h-[200px] rounded-2xl overflow-hidden group border border-white/10 bg-white/[0.03] shadow-lg shrink-0"
+                            className="relative min-w-[160px] md:min-w-[200px] h-[160px] md:h-[200px] rounded-2xl overflow-hidden group border border-white/10 bg-white/[0.03] shadow-lg shrink-0 flex items-center justify-center p-6 md:p-8"
                             whileHover={{ scale: 1.05, y: -5 }}
                             transition={{ duration: 0.3 }}
                         >
                             <img 
                                 src={src} 
-                                alt={`Logo Design Referenz ${idx}`}
+                                alt={`VAMELA Brand Asset ${idx}`}
                                 loading="lazy"
-                                className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500 pointer-events-none"
+                                className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 pointer-events-none"
                             />
                         </motion.div>
                     ))}

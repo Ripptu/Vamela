@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Hero } from './components/Hero';
-import { Features } from './components/Features';
+import { WebsitePortfolio } from './components/WebsitePortfolio';
 import { Showcase } from './components/Showcase';
 import { Testimonials } from './components/Testimonials';
 import { Contact } from './components/Contact';
@@ -11,6 +11,7 @@ import { PriceCalculator } from './components/PriceCalculator';
 import { ContactModal } from './components/ContactModal';
 import { ExitIntentModal } from './components/ExitIntentModal';
 import { FAQ } from './components/FAQ';
+import { LogoPortfolio } from './components/LogoPortfolio';
 import Lenis from 'lenis';
 
 function App() {
@@ -93,7 +94,8 @@ function App() {
         {view === 'home' && (
           <>
             <Hero onOpenContact={() => setIsContactModalOpen(true)} />
-            <Features />
+            <WebsitePortfolio />
+            <LogoPortfolio />
             <Showcase />
             <PriceCalculator />
             <Testimonials />
